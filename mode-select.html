@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モード選択</title>
+  <style>
+    body {
+      text-align: center;
+      margin-top: 50px; 
+    }
+    
+    .image-container {
+      display: flex;
+      flex-direction: column; 
+      justify-content: center;
+      align-items: center;
+    }
+
+    .clickable-image {
+      cursor: pointer; 
+      width: 200px; 
+      height: auto; 
+      margin: 10px; 
+    }
+  </style>
+</head>
+<body>
+       
+ <div class="image-container">
+    <img src="img/btn_OniMode.png" alt="Oni Mode" onclick="redirectToNextPage('Oni Mode')">
+    <img src="img/btn_FukuMode.png" alt="Fuku Mode" onclick="redirectToNextPage('Fuku Mode')">
+  </div>
+
+  <script>
+    function redirectToNextPage(selectedMode) {
+      window.location.href='player-select.html?mode='+ selectedMode;
+    }
+  </script>
+
+</body>
+</html>
+

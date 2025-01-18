@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Select</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>１人目のアイコンを選んでください</h1>
+  </header>
+  <main>
+    <div class="icon-grid">
+      <button class="icon" id="mouse" onclick="selectIcon('mouse')"><img src="./img/btn_mouse.png"></button>
+      <button class="icon" id="cow" onclick="selectIcon('cow')"><img src="./img/btn_cow.png"></button>
+      <button class="icon" id="tiger" onclick="selectIcon('tiger')"><img src="./img/btn_tiger.png"></button>
+      <button class="icon" id="rabbit" onclick="selectIcon('rabbit')"><img src="./img/btn_rabbit.png"></button>
+      <!-- <button class="icon" id="dragon" onclick="selectIcon('dragon')"><img src="./img/btn_dragon.png"></button> -->
+      <button class="icon" id="snake" onclick="selectIcon('snake')"><img src="./img/btn_snake.png"></button>
+      <button class="icon" id="horse" onclick="selectIcon('horse')"><img src="./img/btn_horse.png"></button>
+      <button class="icon" id="sheep" onclick="selectIcon('sheep')"><img src="./img/btn_sheep.png"></button>
+      <button class="icon" id="monkey" onclick="selectIcon('monkey')"><img src="./img/btn_monkey.png"></button>
+      <button class="icon" id="chicken" onclick="selectIcon('chicken')"><img src="./img/btn_chicken.png"></button>
+      <button class="icon" id="dog" onclick="selectIcon('dog')"><img src="./img/btn_dog.png"></button>
+      <button class="icon" id="boar" onclick="selectIcon('boar')"><img src="./img/btn_boar.png"></button>
+    </div>
+
+    <div class="selected-icons" id="selected-icons">
+      <!-- 選択したアイコンを表示 -->
+    </div>
+
+  </main>
+  <button id="next">次へ</button>
+  <script src="icon-select.js"></script>
+</body>
+
+</html>

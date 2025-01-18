@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人数選択</title>
+</head>
+<body>
+
+    <label for="numberSelect">今日の参加人数を選択してください。</label>
+    <select id="numberSelect">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    
+    <button id="submitBtn">次へ</button>
+
+    <!-- 【人の識別画面】に移動する際に使用
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            var selectedValue = document.getElementById('numberSelect').value;
+            window.location.href = "character-select.html?humans=" + selectedValue;
+        });
+    </script>
+-->
+    
+
+    <!--選択した人数が正しいかを確認しているだけ（のちに削除）-->
+    <p id="result"></p>
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+        var selectedValue = document.getElementById('numberSelect').value;
+        document.getElementById('result').textContent = 'You selected ' + selectedValue + ' human(s).';
+    });
+    </script>
+
+    
+    <!--どのモードが選択されているかを確認しているだけ（のちに削除）-->
+    <h4>(テスト用)選択されたモード: <span id="mode">Loading...</span></h4>
+
+    <script>    
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const mode = getQueryParam('mode');
+    if (mode) {
+      document.getElementById('mode').textContent = mode;
+    } else {
+      document.getElementById('mode').textContent = 'No mode selected';
+    }
+    </script>
+
+
+</body>
+</html>
