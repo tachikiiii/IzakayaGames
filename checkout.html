@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金額入力</title>
+</head>
+
+<body>
+    <form id="inputForm">
+        <p>お会計の入力してください。<br>
+        <input type="text" name="amount" id="amount" required>円</p>
+    </form>
+    
+    <button id="calculateBtn">計算する</button>
+    
+    <!-- 入力した「お会計額」を取得した次の結果表示画面に移動する -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("calculateBtn").addEventListener("click", function(event) {
+                event.preventDefault(); 
+
+                var amount = document.getElementById("amount").value.trim();
+                if (amount) { 
+                    window.location.href = 'result.html?amount=' + encodeURIComponent(amount);
+                } else {
+                    alert("お会計を入力してください。");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

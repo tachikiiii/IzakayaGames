@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結果表示</title>
+    <style>
+        /* Popup background design */
+        .popup-background {
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: gray;
+            opacity: 0.5;
+            display: none; /* Initially hidden */
+        }
+
+        /* Popup container design */
+        .popup {
+            z-index: 101;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the popup */
+            height: auto;
+            width: auto;
+            max-width: 90%; /* Ensure the popup doesn't exceed the width of the screen */
+            max-height: 90%; /* Ensure the popup doesn't exceed the height of the screen */
+            overflow: auto; /* Add scroll if the content overflows */
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 3px 1px gray;
+            display: none; /* Initially hidden */
+            padding: 20px;
+        }
+
+        /* Close button design */
+        .popup > .close-button {
+            --size: 20px;
+            position: absolute;
+            top: calc(var(--size) / 4);
+            left: calc(var(--width) - var(--size) * 5 / 4);
+            height: var(--size);
+            width: var(--size);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            color: gray;
+            font-size: var(--size);
+            border-radius: calc(var(--size) / 5);
+        }
+
+        .popup > .close-button:hover {
+            background-color: red;
+            color: white;
+        }
+
+        /* Popup content design */
+        .popup > .content {
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Button container design */
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: column;
+        }
+
+        .button-container > * {
+            margin: 15px;
+        }
+    </style>
+<script>
+    //一人一人の合計金額を計算する関数（鬼モード）
+    function calculatePayment(amount, numPeople) {
+        var paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
+        var remainingAmount = amount - (paymentPerPerson * (numPeople - 1));
+
+        // 負けた人が払う額
+        var payments = [];
+        payments.push(remainingAmount);
+
+        // 残りの人は均等に支払う金額
+        for (var i = 1; i < numPeople; i++) {
+            payments.push(paymentPerPerson);
+        }
+
+        // 負けた人が最初に表示されるように降順の並べ替え
+        payments.sort((a, b) => b - a);
+
+        // 結果を表示
+        var resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = ''; 
+
+        for (var i = 0; i < numPeople; i++) {
+            var personDiv = document.createElement('div');
+            
+            var imgElement = document.createElement('img');
+            imgElement.src = (i == 0) ? "C:\\Users\\user\\Desktop\\居酒屋アプリ企画会\\画像\\ボタン\\btn_dog.png" : 
+                                      (i == 1) ? "C:\\Users\\user\\Desktop\\居酒屋アプリ企画会\\画像\\ボタン\\btn_sheep.png" : 
+                                                 "C:\\Users\\user\\Desktop\\居酒屋アプリ企画会\\画像\\ボタン\\btn_mouse.png";
+            imgElement.alt = "btn_image_" + i;
+            imgElement.style.verticalAlign = 'middle';  // 画像とテキストが縦に整列するように調整
+
+            var amountSpan = document.createElement('span');
+            amountSpan.textContent = payments[i] + " 円";
+            amountSpan.style.marginLeft = '10px'; // 画像とテキストの間にスペースを追加
+
+            personDiv.appendChild(imgElement);
+            personDiv.appendChild(amountSpan);
+
+            resultDiv.appendChild(personDiv);
+        }
+
+        // 支払い額を人数と一緒に表示
+        //for (var i = 0; i < numPeople; i++) {
+         //   resultDiv.innerHTML += (i + 1) + "人 : " + payments[i] + " 円<br>";
+        //}
+    }
+</script>
+
+
+</head>
+<body>
+    <p id="loadingMessage">今日のお支払いは...</p>
+
+    <!-- ポップアップの内容 -->
+    <div class="popup-background" id="popupBackground"></div>
+    <div class="popup" id="popup">
+        <label class="close-button" id="closeButton" for="popupFlag1">×</label>
+        <div class="content">
+            <h3>結果発表</h3>
+            <!--
+            <img src="C:\Users\user\Desktop\居酒屋アプリ企画会\画像\ボタン\btn_dog.png" alt="btn_dog" id="btn_dog">
+            <img src="C:\Users\user\Desktop\居酒屋アプリ企画会\画像\ボタン\btn_sheep.png" alt="btn_sheep" id="btn_sheep">
+            <img src="C:\Users\user\Desktop\居酒屋アプリ企画会\画像\ボタン\btn_mouse.png" alt="btn_mouse" id="btn_mouse">
+        -->
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // URLのクエリパラメータを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const amount = urlParams.get('amount');
+        const numPeople=3;
+
+        // ポップアップに表示する
+        if (amount) {
+            // ５秒経ってからポップアップを表示する
+            setTimeout(function() {
+                document.getElementById('loadingMessage').style.display = 'none';
+                
+                document.getElementById('popupBackground').style.display = 'block';
+                document.getElementById('popup').style.display = 'block';
+
+                calculatePayment(parseInt(amount), numPeople);
+            }, 5000); 
+        } else {
+            document.getElementById('loadingMessage').textContent = 'No amount provided.';
+        }
+
+        // 「x」ボタンを選択されるとポップアップ画面が消える
+        document.getElementById('closeButton').addEventListener('click', function() {
+            document.getElementById('popupBackground').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        });
+    </script>
+  
+</body>
+</html>
