@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>人数選択</title>
+    <title>Select Number</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -24,23 +25,11 @@
     </select>
     
     <button id="submitBtn">次へ</button>
+    <button id="backBtn">戻る</button>
     <p id="result"></p>
     <h4>(テスト用)選択されたモード: <span id="mode">Loading...</span></h4>
 
-    <script>    
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
-
-    const mode = getQueryParam('mode');
-    if (mode) {
-      document.getElementById('mode').textContent = mode;
-    } else {
-      document.getElementById('mode').textContent = 'No mode selected';
-    }
-    </script>
-
+    <script src="playerSelect.js"></script>
 
 </body>
 </html>

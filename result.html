@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結果表示</title>
+    <title>Show Result</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         /* Popup background design */
         .popup-background {
@@ -77,56 +78,6 @@
             margin: 15px;
         }
     </style>
-<script>
-    //一人一人の合計金額を計算する関数（鬼モード）
-    function calculatePayment(amount, numPeople) {
-        var paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
-        var remainingAmount = amount - (paymentPerPerson * (numPeople - 1));
-
-        // 負けた人が払う額
-        var payments = [];
-        payments.push(remainingAmount);
-
-        // 残りの人は均等に支払う金額
-        for (var i = 1; i < numPeople; i++) {
-            payments.push(paymentPerPerson);
-        }
-
-        // 負けた人が最初に表示されるように降順の並べ替え
-        payments.sort((a, b) => b - a);
-
-        // 結果を表示
-        var resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = ''; 
-
-        for (var i = 0; i < numPeople; i++) {
-            var personDiv = document.createElement('div');
-            
-            var imgElement = document.createElement('img');
-            imgElement.src = (i == 0) ? "C:\\Users\\user\\Desktop\\居酒屋アプリ企画会\\画像\\ボタン\\btn_dog.png" : 
-                                      (i == 1) ? "C:\\Users\\user\\Desktop\\居酒屋アプリ企画会\\画像\\ボタン\\btn_sheep.png" : 
-                                                 "C:\\Users\\user\\Desktop\\居酒屋アプリ企画会\\画像\\ボタン\\btn_mouse.png";
-            imgElement.alt = "btn_image_" + i;
-            imgElement.style.verticalAlign = 'middle';  // 画像とテキストが縦に整列するように調整
-
-            var amountSpan = document.createElement('span');
-            amountSpan.textContent = payments[i] + " 円";
-            amountSpan.style.marginLeft = '10px'; // 画像とテキストの間にスペースを追加
-
-            personDiv.appendChild(imgElement);
-            personDiv.appendChild(amountSpan);
-
-            resultDiv.appendChild(personDiv);
-        }
-
-        // 支払い額を人数と一緒に表示
-        //for (var i = 0; i < numPeople; i++) {
-         //   resultDiv.innerHTML += (i + 1) + "人 : " + payments[i] + " 円<br>";
-        //}
-    }
-</script>
-
-
 </head>
 <body>
     <p id="loadingMessage">今日のお支払いは...</p>
@@ -141,33 +92,7 @@
         </div>
     </div>
 
-    <script>
-        // URLのクエリパラメータを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const amount = urlParams.get('amount');
-        const numPeople=3;
-
-        // ポップアップに表示する
-        if (amount) {
-            // ５秒経ってからポップアップを表示する
-            setTimeout(function() {
-                document.getElementById('loadingMessage').style.display = 'none';
-                
-                document.getElementById('popupBackground').style.display = 'block';
-                document.getElementById('popup').style.display = 'block';
-
-                calculatePayment(parseInt(amount), numPeople);
-            }, 5000); 
-        } else {
-            document.getElementById('loadingMessage').textContent = 'No amount provided.';
-        }
-
-        // 「x」ボタンを選択されるとポップアップ画面が消える
-        document.getElementById('closeButton').addEventListener('click', function() {
-            document.getElementById('popupBackground').style.display = 'none';
-            document.getElementById('popup').style.display = 'none';
-        });
-    </script>
+    <script src="result.js"></script>
   
 </body>
 </html>
