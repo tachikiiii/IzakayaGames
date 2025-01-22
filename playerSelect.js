@@ -16,14 +16,12 @@ document.getElementById('backBtn').addEventListener('click', function() {
 });
     
 //どのモードが選択されているかを確認しているだけ（のちに削除）
-function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
+const mode = localStorage.getItem('mode');
 
-const mode = getQueryParam('mode');
 if (mode) {
+    // If 'mode' is found in localStorage, display it
     document.getElementById('mode').textContent = mode;
 } else {
+    // If 'mode' is not found, display a fallback message
     document.getElementById('mode').textContent = 'No mode selected';
 }
