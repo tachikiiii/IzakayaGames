@@ -1,6 +1,8 @@
+// icon-select.js
 let players = [];
 let currentPlayer = 1;
-const maxPlayers = Number(localStorage.getItem('playerCount')) || 3; // テスト用にデフォルト3人
+// localStorageから選択した人数を取得
+const maxPlayers = Number(localStorage.getItem('playerCount')) || 3; // デフォルト3人
 
 function selectIcon(iconId) {
   if (players.some(player => player.icon === iconId)) {
@@ -55,4 +57,3 @@ function createSelectedIconsContainer() {
   document.body.appendChild(container);
   return container;
 }
-  
