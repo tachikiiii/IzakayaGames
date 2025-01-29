@@ -84,3 +84,104 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.innerHTML += '<button>ゲームを開始する</button>';
     document.querySelector('button').addEventListener('click', requestDeviceMotionPermission);
 });
+
+
+// let currentPlayerIndex = 0; // 現在のプレイヤーのインデックス
+// let shakeCount = 0;
+// let lastX = null, lastY = null, lastZ = null;
+// const threshold = 5;
+// const debounceTime = 200;
+// let lastShakeTime = 0;
+// let gameTimer = null;
+
+// // プレイヤー情報をlocalStorageから取得
+// const players = JSON.parse(localStorage.getItem("players")) || [];
+
+// // 現在のプレイヤー情報を取得
+// function getCurrentPlayer() {
+//     return players[currentPlayerIndex];
+// }
+
+// // シェイクを検出する
+// function handleMotion(event) {
+//     const { x, y, z } = event.accelerationIncludingGravity;
+
+//     if (lastX !== null && lastY !== null && lastZ !== null) {
+//         const deltaX = Math.abs(x - lastX);
+//         const deltaY = Math.abs(y - lastY);
+//         const deltaZ = Math.abs(z - lastZ);
+
+//         if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
+//             const currentTime = Date.now();
+//             if (currentTime - lastShakeTime > debounceTime) {
+//                 shakeCount++;
+//                 document.getElementById("shakeCount").innerText = shakeCount;
+//                 lastShakeTime = currentTime;
+//             }
+//         }
+//     }
+
+//     lastX = x;
+//     lastY = y;
+//     lastZ = z;
+// }
+
+// // ゲームを開始する
+// function startGame() {
+//     const player = getCurrentPlayer();
+//     if (!player) {
+//         alert("プレイヤーが存在しません");
+//         return;
+//     }
+
+//     shakeCount = 0;
+//     document.body.innerHTML = `
+//         <h1>${player.number}人目: ${player.icon}のゲーム開始!</h1>
+//         <p>振った回数: <span id="shakeCount">0</span></p>
+//     `;
+
+//     enableMotion();
+
+//     gameTimer = setTimeout(() => {
+//         window.removeEventListener("devicemotion", handleMotion);
+//         player.shakeCount = shakeCount; // 結果を保存
+//         updateLocalStorage();
+
+//         if (currentPlayerIndex + 1 < players.length) {
+//             currentPlayerIndex++;
+//             document.body.innerHTML += `
+//                 <h1>結果: ${shakeCount}回</h1>
+//                 <button id="nextPlayer">次へ</button>
+//             `;
+//             document.getElementById("nextPlayer").addEventListener("click", startGame);
+//         } else {
+//             document.body.innerHTML += `
+//                 <h1>全員のゲームが終了しました</h1>
+//                 <button id="checkout">次へ</button>
+//             `;
+//             document.getElementById("checkout").addEventListener("click", () => {
+//                 window.location.href = "checkout.html";
+//             });
+//         }
+//     }, 10000);
+// }
+
+// // localStorageを更新
+// function updateLocalStorage() {
+//     localStorage.setItem("players", JSON.stringify(players));
+// }
+
+// // デバイスモーションを有効化
+// function enableMotion() {
+//     window.addEventListener("devicemotion", handleMotion);
+// }
+
+// // ページロード時の初期化
+// document.addEventListener("DOMContentLoaded", () => {
+//     const player = getCurrentPlayer();
+//     if (!player) {
+//         alert("プレイヤー情報がありません");
+//         return;
+//     }
+//     startGame();
+// });

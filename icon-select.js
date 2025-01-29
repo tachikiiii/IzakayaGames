@@ -1,8 +1,9 @@
-// icon-select.js
 let players = [];
 let currentPlayer = 1;
 // localStorageから選択した人数を取得
 const maxPlayers = Number(localStorage.getItem('playerCount')) || 3; // デフォルト3人
+
+console.log(`選択した人数: ${maxPlayers}`);
 
 function selectIcon(iconId) {
   if (players.some(player => player.icon === iconId)) {
@@ -22,7 +23,10 @@ function selectIcon(iconId) {
   if (players.length === maxPlayers) {
     const header = document.querySelector("header h1");
     header.textContent = "すべてのプレイヤーの登録が完了しました";
-    document.querySelector("#next").style.display = "inline-block";
+    const nextButton = document.querySelector("#next");
+    nextButton.style.display = "inline-block";
+    // 「次へ」ボタンのクリックイベントを追加
+    nextButton.addEventListener("click", startGame);
   } else {
     currentPlayer++;
     updateHeader();
@@ -56,4 +60,22 @@ function createSelectedIconsContainer() {
   
   document.body.appendChild(container);
   return container;
+}
+
+// アイコンと人数の保存
+function savePlayersToLocalStorage() {
+  localStorage.setItem(
+    "players",
+    JSON.stringify(players.map((player, index) => ({
+        number: `${index + 1}人目`,
+        icon: player.icon,
+        shakeCount: 0 // 初期値
+    })))
+  );
+}
+
+// 「次へ」ボタンを押したときにゲーム開始ページへ遷移
+function startGame() {
+  savePlayersToLocalStorage();
+  window.location.href = "shakecounter.html"; // shakecounter.jsに遷移
 }
