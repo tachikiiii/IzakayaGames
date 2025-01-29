@@ -37,3 +37,10 @@ button {
 button:hover {
   background-color: #004d40;
 }
+
+#shakeCount {
+  display:block
+  color: red;
+  background: #fff;
+  font-size: 40px;
+}
