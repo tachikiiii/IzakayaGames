@@ -80,11 +80,11 @@ function startGame() {
                             <button id="resultPage">結果を見る</button>
                         `;
                         document.getElementById("resultPage").addEventListener("click", () => {
-                            window.location.href = "result.html";
+                            window.location.href = "checkout.html";
                         });
                     }
                 }, 10000);
-            }, 400); // 0.5秒遅延させて音声と遷移を同期
+            }, 100); // 0.5秒遅延させて音声と遷移を同期
         }
     }, 1000);
 }
