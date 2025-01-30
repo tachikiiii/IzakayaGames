@@ -1,4 +1,4 @@
 function redirectToNextPage(selectedMode) {
-    localStorage.setItem('mode', selectedMode);
+    sessionStorage.setItem('mode', selectedMode);
     window.location.href = 'player-select.html';
 }

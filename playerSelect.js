@@ -2,8 +2,8 @@
 document.getElementById('submitBtn').addEventListener('click', function () {
     const selectedValue = document.getElementById('numberSelect').value;
 
-    // 選択した人数をlocalStorageに保存
-    localStorage.setItem('playerCount', selectedValue);
+    // 選択した人数をsessionStorageに保存
+    sessionStorage.setItem('playerCount', selectedValue);
 
     // プレイヤー情報の初期化
     const players = [];
@@ -11,8 +11,8 @@ document.getElementById('submitBtn').addEventListener('click', function () {
         players.push({ number: i, shakeCount: 0 });
     }
 
-    // players情報をlocalStorageに保存
-    localStorage.setItem('players', JSON.stringify(players));
+    // players情報をsessionStorageに保存
+    sessionStorage.setItem('players', JSON.stringify(players));
 
     // icon-select.htmlに遷移
     window.location.href = "icon-select.html?humans=" + selectedValue;
@@ -31,13 +31,11 @@ document.getElementById('backBtn').addEventListener('click', function () {
 });
 
 //どのモードが選択されているかを確認しているだけ（のちに削除）
-const mode = localStorage.getItem('mode');
+const mode = sessionStorage.getItem('mode');
 
 if (mode) {
-    // If 'mode' is found in localStorage, display it
     document.getElementById('mode').textContent = mode;
 } else {
-    // If 'mode' is not found, display a fallback message
     document.getElementById('mode').textContent = 'No mode selected';
 }
 

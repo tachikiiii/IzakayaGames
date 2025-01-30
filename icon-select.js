@@ -1,7 +1,7 @@
 let players = [];
 let currentPlayer = 1;
-// localStorageから選択した人数を取得
-const maxPlayers = Number(localStorage.getItem('playerCount')) || 3; // デフォルト3人
+// sessionStorageから選択した人数を取得
+const maxPlayers = Number(sessionStorage.getItem('playerCount')) || 3; // デフォルト3人
 
 console.log(`選択した人数: ${maxPlayers}`);
 
@@ -63,8 +63,8 @@ function createSelectedIconsContainer() {
 }
 
 // アイコンと人数の保存
-function savePlayersToLocalStorage() {
-  localStorage.setItem(
+function savePlayersToSessionStorage() {
+  sessionStorage.setItem(
     "players",
     JSON.stringify(players.map((player, index) => ({
         number: `${index + 1}人目`,
@@ -76,6 +76,6 @@ function savePlayersToLocalStorage() {
 
 // 「次へ」ボタンを押したときにゲーム開始ページへ遷移
 function startGame() {
-  savePlayersToLocalStorage();
+  savePlayersToSessionStorage();
   window.location.href = "shakecounter.html"; // shakecounter.jsに遷移
 }
