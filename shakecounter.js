@@ -6,7 +6,7 @@ let lastShakeTime = 0;
 let gameTimer = null;
 let countdownSound = new Audio("countdown.mp3");
 
-let players = JSON.parse(localStorage.getItem("players")) || [];
+let players = JSON.parse(sessionStorage.getItem("players")) || [];
 let currentPlayerIndex = 0;
 
 function getCurrentPlayer() {
@@ -63,7 +63,7 @@ function startGame() {
                 gameTimer = setTimeout(() => {
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
-                    updateLocalStorage();
+                    updateSessionStorage();
 
                     document.body.innerHTML += `
                         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんの結果・・・${shakeCount}回</h1>
@@ -89,8 +89,8 @@ function startGame() {
     }, 1000);
 }
 
-function updateLocalStorage() {
-    localStorage.setItem("players", JSON.stringify(players));
+function updateSessionStorage() {
+    sessionStorage.setItem("players", JSON.stringify(players));
 }
 
 function enableMotion() {

@@ -1,5 +1,16 @@
 function calculatePayment(amount, numPeople) {
-    const paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
+    
+    // 選択されたモードを確認
+    const mode = sessionStorage.getItem("mode")
+
+    if(mode){
+        alert("モードが選択されいません。")
+    }else if (mode=="Oni Mode"){
+        const paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
+    }else{
+        const paymentPerPerson = Math.floor(amount / numPeople / 100) * 100;
+    }
+    
     const remainingAmount = amount - (paymentPerPerson * (numPeople - 1));
 
     // 負けた人が払う額
@@ -38,21 +49,22 @@ function calculatePayment(amount, numPeople) {
         resultDiv.appendChild(personDiv);
     }
 }
+
 // URLのクエリパラメータを取得
 const urlParams = new URLSearchParams(window.location.search);
 const amount = urlParams.get('amount');
 const numPeople=3;
 
-// ポップアップに表示する
+// ポップアップを表示する
 if (amount) {
-    // ５秒経ってからポップアップを表示する
+    // 3秒経ってからポップアップを表示する
     setTimeout(function() {
         document.getElementById('loadingMessage').style.display = 'none';
         document.getElementById('popupBackground').style.display = 'block';
         document.getElementById('popup').style.display = 'block';
 
         calculatePayment(parseInt(amount), numPeople);
-    }, 5000); 
+    }, 3000); 
 } else {
     document.getElementById('loadingMessage').textContent = 'No amount provided.';
 }
