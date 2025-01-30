@@ -8,8 +8,8 @@
 </head>
 <body>
 
-    <label for="numberSelect">今日の参加人数を選択してください。</label>
-    <select id="numberSelect">
+    <h1>今日の参加人数を<br>選択してね (最大12人)</h1>
+    <select class="pulldown" id="numberSelect">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -24,8 +24,11 @@
         <option value="12">12</option>
     </select>
     
-    <button id="submitBtn">次へ</button>
-    <button id="backBtn">戻る</button>
+    <div class="playerSelect-button">
+        <button class="playerSelect-back" id="backBtn">＜ 戻る</button>
+        <button class="testButton" id="submitBtn">次へ ＞</button>
+    </div>
+
     <p id="result"></p>
     <h4>(テスト用)選択されたモード: <span id="mode">Loading...</span></h4>
 
