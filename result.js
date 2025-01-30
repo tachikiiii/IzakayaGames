@@ -1,14 +1,13 @@
-function calculatePayment(amount, numPeople) {
-    
-    // 選択されたモードを確認
-    const mode = sessionStorage.getItem("mode")
 
-    if(mode){
-        alert("モードが選択されいません。")
-    }else if (mode=="Oni Mode"){
-        const paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
+// それぞれの支払い額を計算する関数
+function calculatePayment(amount, numPeople,mode) {
+    
+    let paymentPerPerson=0
+
+     if (mode=="Oni Mode"){
+        paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
     }else{
-        const paymentPerPerson = Math.floor(amount / numPeople / 100) * 100;
+        paymentPerPerson = Math.floor(amount / numPeople / 100) * 100;
     }
     
     const remainingAmount = amount - (paymentPerPerson * (numPeople - 1));
@@ -18,13 +17,17 @@ function calculatePayment(amount, numPeople) {
     payments.push(remainingAmount);
 
     // 残りの人は均等に支払う金額
-    for (var i = 1; i < numPeople; i++) {
+    for (let i = 1; i < numPeople; i++) {
         payments.push(paymentPerPerson);
     }
 
     // 負けた人が最初に表示されるように降順の並べ替え
     payments.sort((a, b) => b - a);
 
+    showPopup(payments)
+}
+
+function showPopup(payments){
     // 結果を表示
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = ''; 
@@ -54,17 +57,23 @@ function calculatePayment(amount, numPeople) {
 const urlParams = new URLSearchParams(window.location.search);
 const amount = urlParams.get('amount');
 const numPeople=3;
+const mode = sessionStorage.getItem("mode")
 
 // ポップアップを表示する
 if (amount) {
-    // 3秒経ってからポップアップを表示する
-    setTimeout(function() {
-        document.getElementById('loadingMessage').style.display = 'none';
-        document.getElementById('popupBackground').style.display = 'block';
-        document.getElementById('popup').style.display = 'block';
+    if(mode){
+        // 3秒経ってからポップアップを表示する
+        setTimeout(function() {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('popupBackground').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
 
-        calculatePayment(parseInt(amount), numPeople);
-    }, 3000); 
+            calculatePayment(parseInt(amount), numPeople, mode);
+        }, 3000); 
+    }else{
+        document.getElementById('loadingMessage').textContent = 'No mode selected.';
+    }
+
 } else {
     document.getElementById('loadingMessage').textContent = 'No amount provided.';
 }
