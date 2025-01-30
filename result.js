@@ -3,12 +3,12 @@
 const urlParams = new URLSearchParams(window.location.search);
 const amount = urlParams.get('amount');
 const numPeople=sessionStorage.getItem("playerCount");
-//const mode = sessionStorage.getItem("mode")
-//test
-const mode = "Fuku Mode"
+const players = JSON.parse(sessionStorage.getItem('players'));
+const icons = players.map(player => player.icon);
+const mode = sessionStorage.getItem("mode")
 
 // それぞれの支払い額を計算する関数
-function calculatePayment(amount, numPeople) {
+function calculatePayment(amount) {
     
     let paymentPerPerson=0
 
@@ -43,12 +43,10 @@ function showPopup(payments){
 
     for (let i = 0; i < numPeople; i++) {
         const personDiv = document.createElement('div');
-            
         const imgElement = document.createElement('img');
-        imgElement.src = (i == 0) ? "./img/btn_dog.png" : 
-                        (i == 1) ? "./img/btn_sheep.png" : 
-                                    "./img/btn_mouse.png";
-        imgElement.alt = "btn_image_" + i;
+
+        imgElement.src = `./img/btn_${icons[i]}.png`;
+        imgElement.alt = `btn_image_${i}`;
         imgElement.style.verticalAlign = 'middle';  // 画像とテキストが縦に整列するように調整
 
         const amountSpan = document.createElement('span');
@@ -71,7 +69,7 @@ if (amount) {
             document.getElementById('popupBackground').style.display = 'block';
             document.getElementById('popup').style.display = 'block';
 
-            calculatePayment(parseInt(amount), numPeople);
+            calculatePayment(parseInt(amount));
         }, 3000); 
     }else{
         document.getElementById('loadingMessage').textContent = 'No mode selected.';
