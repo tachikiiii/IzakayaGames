@@ -1,6 +1,14 @@
 
+// 定数の指定
+const urlParams = new URLSearchParams(window.location.search);
+const amount = urlParams.get('amount');
+const numPeople=sessionStorage.getItem("playerCount");
+//const mode = sessionStorage.getItem("mode")
+//test
+const mode = "Fuku Mode"
+
 // それぞれの支払い額を計算する関数
-function calculatePayment(amount, numPeople,mode) {
+function calculatePayment(amount, numPeople) {
     
     let paymentPerPerson=0
 
@@ -27,8 +35,9 @@ function calculatePayment(amount, numPeople,mode) {
     showPopup(payments)
 }
 
+// 結果を表示
 function showPopup(payments){
-    // 結果を表示
+    
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = ''; 
 
@@ -53,12 +62,6 @@ function showPopup(payments){
     }
 }
 
-// URLのクエリパラメータを取得
-const urlParams = new URLSearchParams(window.location.search);
-const amount = urlParams.get('amount');
-const numPeople=3;
-const mode = sessionStorage.getItem("mode")
-
 // ポップアップを表示する
 if (amount) {
     if(mode){
@@ -68,7 +71,7 @@ if (amount) {
             document.getElementById('popupBackground').style.display = 'block';
             document.getElementById('popup').style.display = 'block';
 
-            calculatePayment(parseInt(amount), numPeople, mode);
+            calculatePayment(parseInt(amount), numPeople);
         }, 3000); 
     }else{
         document.getElementById('loadingMessage').textContent = 'No mode selected.';
