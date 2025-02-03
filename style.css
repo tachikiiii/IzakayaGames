@@ -122,14 +122,14 @@
     font-size: 20px;
     padding: 10px 20px 10px 20px;
     font-weight: bold;
-    border: 2px solid #D9DC68;
+    border: 2px solid #B7BD53;
     color: #000;
     margin: 0px 25px 0px 25px;
   }
 
   .testButton:hover {
     color: #fff;
-    background: #D9DC68;
+    background: #B7BD53;
   }
 
   .playerSelect-back{
@@ -151,3 +151,6 @@
     border-width: 3px;
   }
 
+  .image-container{
+    text-align: center;
+  }
