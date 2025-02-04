@@ -66,6 +66,8 @@ function startGame() {
                     <p>振った回数: <span id="shakeCount">0</span></p>
                 `;
 
+                enableMotion();
+
                 gameTimer = setTimeout(() => {
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
@@ -80,7 +82,7 @@ function startGame() {
                         document.body.innerHTML += `
                             <button id="nextPlayer">次のプレイヤーへ</button>
                         `;
-                        document.getElementById("nextPlayer").addEventListener("click", startGame);
+                        document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
                         document.body.innerHTML += `
                             <button id="resultPage">結果を見る</button>
@@ -99,7 +101,7 @@ function updateSessionStorage() {
     sessionStorage.setItem("players", JSON.stringify(players));
 }
 
-// ユーザー操作内でモーションセンサーの許可をリクエスト
+// ユーザー操作内でモーションセンサーの許可をリクエストし、許可後にゲームを開始
 function requestMotionPermission() {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
         console.log("iOS のため、モーションセンサーの許可をリクエストします。");
@@ -108,8 +110,7 @@ function requestMotionPermission() {
             .then(permissionState => {
                 if (permissionState === "granted") {
                     console.log("モーションセンサーの許可が取得できました。");
-                    enableMotion();
-                    document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
+                    startGame(); // 許可後にゲームを開始
                 } else {
                     alert("モーションセンサーの許可が必要です。設定を確認してください。");
                 }
@@ -119,8 +120,7 @@ function requestMotionPermission() {
             });
     } else {
         console.log("Android などでは許可不要なので、そのまま開始します。");
-        enableMotion();
-        document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
+        startGame(); // Androidではすぐにゲームを開始
     }
 }
 
@@ -130,8 +130,7 @@ function enableMotion() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.body.innerHTML += `<button id="startGame">ゲームを開始</button>`;
-    // ボタンをタップしたらモーションセンサーの許可をリクエスト
+    document.body.innerHTML += `<button id="startGame">ゲームを開始〜</button>`;
+    // 「ゲームを開始」ボタンを押したら、モーションセンサーの許可をリクエストし、許可後にゲームを開始
     document.getElementById("startGame").addEventListener("click", requestMotionPermission);
-    document.getElementById("startGame").addEventListener("click", startGame);
 });
