@@ -93,6 +93,23 @@ function updateSessionStorage() {
     sessionStorage.setItem("players", JSON.stringify(players));
 }
 
+function requestMotionPermission() {
+    if (typeof DeviceMotionEvent.requestPermission === "function") {
+        DeviceMotionEvent.requestPermission()
+            .then(permissionState => {
+                if (permissionState === "granted") {
+                    enableMotion();
+                } else {
+                    alert("モーションセンサーの使用が許可されていません。");
+                }
+            })
+            .catch(console.error);
+    } else {
+        // Android などでは許可不要なのでそのまま実行
+        enableMotion();
+    }
+}
+
 function enableMotion() {
     window.addEventListener("devicemotion", handleMotion);
 }
