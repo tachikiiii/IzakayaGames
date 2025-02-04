@@ -64,11 +64,9 @@ function startGame() {
                     <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
                     <p>スマホを振ってください！</p>
                     <p>振った回数: <span id="shakeCount">0</span></p>
-                    <button id="startMotion">モーションセンサーを有効化</button>
                 `;
 
-                // ボタンをタップしたらモーションセンサーの許可をリクエスト
-                document.getElementById("startMotion").addEventListener("click", requestMotionPermission);
+
 
                 gameTimer = setTimeout(() => {
                     window.removeEventListener("devicemotion", handleMotion);
@@ -135,5 +133,7 @@ function enableMotion() {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.innerHTML += `<button id="startGame">ゲームを開始!</button>`;
+    // ボタンをタップしたらモーションセンサーの許可をリクエスト
+    document.getElementById("startGame").addEventListener("click", requestMotionPermission);
     document.getElementById("startGame").addEventListener("click", startGame);
 });
