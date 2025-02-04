@@ -26,42 +26,11 @@ function selectIcon(iconId) {
     const nextButton = document.querySelector("#next");
     nextButton.style.display = "inline-block";
     // 「次へ」ボタンのクリックイベントを追加
-    nextButton.addEventListener("click", requestMotionPermission);
     nextButton.addEventListener("click", startGame);
   } else {
     currentPlayer++;
     updateHeader();
   }
-}
-
-// ユーザー操作内でモーションセンサーの許可をリクエスト
-function requestMotionPermission() {
-  if (typeof DeviceMotionEvent.requestPermission === "function") {
-      console.log("iOS のため、モーションセンサーの許可をリクエストします。");
-
-      DeviceMotionEvent.requestPermission()
-          .then(permissionState => {
-              if (permissionState === "granted") {
-                  console.log("モーションセンサーの許可が取得できました。");
-                  enableMotion();
-                  document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
-              } else {
-                  alert("モーションセンサーの許可が必要です。設定を確認してください。");
-              }
-          })
-          .catch(error => {
-              console.error("モーションセンサーの許可取得に失敗しました:", error);
-          });
-  } else {
-      console.log("Android などでは許可不要なので、そのまま開始します。");
-      enableMotion();
-      document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
-  }
-}
-
-function enableMotion() {
-  console.log("devicemotion イベントを追加します");
-  window.addEventListener("devicemotion", handleMotion);
 }
 
 function updateHeader() {
