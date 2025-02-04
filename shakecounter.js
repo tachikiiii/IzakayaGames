@@ -134,6 +134,6 @@ function enableMotion() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.body.innerHTML += `<button id="startGame">ゲームを開始する</button>`;
+    document.body.innerHTML += `<button id="startGame">ゲームを開始!</button>`;
     document.getElementById("startGame").addEventListener("click", startGame);
 });
