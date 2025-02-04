@@ -1,7 +1,7 @@
 let shakeCount = 0;
 let lastX = null, lastY = null, lastZ = null;
-const threshold = 5;
-const debounceTime = 200;
+const threshold = 8; // シェイクの感度を少し厳しくする
+const debounceTime = 500; // 500ms 以内の連続カウントを防ぐ
 let lastShakeTime = 0;
 let gameTimer = null;
 let countdownSound = new Audio("countdown.mp3");
@@ -27,10 +27,13 @@ function handleMotion(event) {
         const deltaY = Math.abs(y - lastY);
         const deltaZ = Math.abs(z - lastZ);
 
-        if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
+        console.log(`deltaX: ${deltaX}, deltaY: ${deltaY}, deltaZ: ${deltaZ}`);
+
+        if ((deltaX > threshold || deltaY > threshold || deltaZ > threshold)) {
             const currentTime = Date.now();
             if (currentTime - lastShakeTime > debounceTime) {
                 shakeCount++;
+                console.log(`シェイクカウント: ${shakeCount}`);
                 document.getElementById("shakeCount").innerText = shakeCount;
                 lastShakeTime = currentTime;
             }
@@ -130,7 +133,6 @@ function enableMotion() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.body.innerHTML += `<button id="startGame">ゲームを開始〜</button>`;
-    // 「ゲームを開始」ボタンを押したら、モーションセンサーの許可をリクエストし、許可後にゲームを開始
+    document.body.innerHTML += `<button id="startGame">ゲーム開始</button>`;
     document.getElementById("startGame").addEventListener("click", requestMotionPermission);
 });
