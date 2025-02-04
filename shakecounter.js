@@ -20,6 +20,7 @@ function handleMotion(event) {
     }
 
     const { x, y, z } = event.accelerationIncludingGravity;
+    console.log(`加速度 x: ${x}, y: ${y}, z: ${z}`);
 
     if (lastX !== null && lastY !== null && lastZ !== null) {
         const deltaX = Math.abs(x - lastX);
@@ -63,8 +64,12 @@ function startGame() {
                     <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
                     <p>スマホを振ってください！</p>
                     <p>振った回数: <span id="shakeCount">0</span></p>
+                    <button id="startMotion">モーションセンサーを有効化</button>
                 `;
-                requestMotionPermission();
+
+                // ボタンをタップしたらモーションセンサーの許可をリクエスト
+                document.getElementById("startMotion").addEventListener("click", requestMotionPermission);
+
                 gameTimer = setTimeout(() => {
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
@@ -98,15 +103,17 @@ function updateSessionStorage() {
     sessionStorage.setItem("players", JSON.stringify(players));
 }
 
-// モーションセンサーの許可をリクエスト
+// ユーザー操作内でモーションセンサーの許可をリクエスト
 function requestMotionPermission() {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
         console.log("iOS のため、モーションセンサーの許可をリクエストします。");
+
         DeviceMotionEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === "granted") {
                     console.log("モーションセンサーの許可が取得できました。");
                     enableMotion();
+                    document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
                 } else {
                     alert("モーションセンサーの許可が必要です。設定を確認してください。");
                 }
@@ -117,6 +124,7 @@ function requestMotionPermission() {
     } else {
         console.log("Android などでは許可不要なので、そのまま開始します。");
         enableMotion();
+        document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
     }
 }
 
