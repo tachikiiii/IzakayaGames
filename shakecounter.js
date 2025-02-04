@@ -1,7 +1,7 @@
 let shakeCount = 0;
 let lastX = null, lastY = null, lastZ = null;
 const threshold = 3; // 値が大きいほどシェイクの感度が鈍る
-const debounceTime = 300; // 数値以内の連続カウントを防ぐ
+const debounceTime = 200; // 連続カウントを防ぐ時間（ミリ秒）
 let lastShakeTime = 0;
 let gameTimer = null;
 let countdownSound = new Audio("countdown.mp3");
@@ -9,31 +9,27 @@ let countdownSound = new Audio("countdown.mp3");
 let players = JSON.parse(sessionStorage.getItem("players")) || [];
 let currentPlayerIndex = 0;
 
+// 現在のプレイヤーを取得する
 function getCurrentPlayer() {
     return players[currentPlayerIndex];
 }
 
+// スマホの加速度センサーのデータを取得し、シェイクをカウントする
 function handleMotion(event) {
-    if (!event.accelerationIncludingGravity) {
-        console.warn("加速度データが取得できません");
-        return;
-    }
+    if (!event.accelerationIncludingGravity) return;
 
     const { x, y, z } = event.accelerationIncludingGravity;
-    console.log(`加速度 x: ${x}, y: ${y}, z: ${z}`);
 
     if (lastX !== null && lastY !== null && lastZ !== null) {
         const deltaX = Math.abs(x - lastX);
         const deltaY = Math.abs(y - lastY);
         const deltaZ = Math.abs(z - lastZ);
 
-        console.log(`deltaX: ${deltaX}, deltaY: ${deltaY}, deltaZ: ${deltaZ}`);
-
-        if ((deltaX > threshold || deltaY > threshold || deltaZ > threshold)) {
+        // シェイク判定（しきい値を超えた場合にカウント）
+        if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
             const currentTime = Date.now();
             if (currentTime - lastShakeTime > debounceTime) {
                 shakeCount++;
-                console.log(`シェイクカウント: ${shakeCount}`);
                 document.getElementById("shakeCount").innerText = shakeCount;
                 lastShakeTime = currentTime;
             }
@@ -45,13 +41,9 @@ function handleMotion(event) {
     lastZ = z;
 }
 
+// ゲームを開始する（カウントダウン後にシェイク計測開始）
 function startGame() {
     const player = getCurrentPlayer();
-    if (!player) {
-        alert("プレイヤーが存在しません");
-        return;
-    }
-
     shakeCount = 0;
     let countdown = 4;
 
@@ -59,7 +51,11 @@ function startGame() {
         countdown--;
         countdownSound.play();
         if (countdown > 0) {
-            document.body.innerHTML = `<h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1><p>スマホを振ってください！</p><h2>${countdown}</h2>`;
+            document.body.innerHTML = `
+                <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
+                <p>スマホを振ってください！</p>
+                <h2>${countdown}</h2>
+            `;
         } else {
             clearInterval(countdownInterval);
             setTimeout(() => {
@@ -72,6 +68,7 @@ function startGame() {
                 enableMotion();
 
                 gameTimer = setTimeout(() => {
+                    // ゲーム終了時の処理
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
                     updateSessionStorage();
@@ -80,19 +77,14 @@ function startGame() {
                         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんの結果・・・${shakeCount}回</h1>
                     `;
 
+                    // 次のプレイヤー or 結果表示
                     if (currentPlayerIndex + 1 < players.length) {
                         currentPlayerIndex++;
-                        document.body.innerHTML += `
-                            <button id="nextPlayer">次のプレイヤーへ</button>
-                        `;
+                        document.body.innerHTML += `<button id="nextPlayer">次のプレイヤーへ</button>`;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
-                        document.body.innerHTML += `
-                            <button id="resultPage">結果を見る</button>
-                        `;
-                        document.getElementById("resultPage").addEventListener("click", () => {
-                            window.location.href = "checkout.html";
-                        });
+                        document.body.innerHTML += `<button id="resultPage">結果を見る</button>`;
+                        document.getElementById("resultPage").addEventListener("click", showResults);
                     }
                 }, 10000);
             }, 100);
@@ -100,20 +92,39 @@ function startGame() {
     }, 1000);
 }
 
+// ゲーム結果を表示する（シェイク回数順に並べる）
+function showResults() {
+    players.sort((a, b) => b.shakeCount - a.shakeCount); // シェイク回数の多い順に並べる
+
+    let resultHTML = `<h1>ゲーム結果</h1><ul style="list-style: none;">`;
+    players.forEach(player => {
+        resultHTML += `
+            <li>
+                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:50px; height:50px;">
+                ${player.icon} さん: <strong>${player.shakeCount}回</strong>
+            </li>
+        `;
+    });
+    resultHTML += `</ul><button id="checkoutPage">お会計へ</button>`;
+
+    document.body.innerHTML = resultHTML;
+    document.getElementById("checkoutPage").addEventListener("click", () => {
+        window.location.href = "checkout.html";
+    });
+}
+
+// プレイヤーのデータをストレージに保存する
 function updateSessionStorage() {
     sessionStorage.setItem("players", JSON.stringify(players));
 }
 
-// ユーザー操作内でモーションセンサーの許可をリクエストし、許可後にゲームを開始
+// モーションセンサーの許可をリクエストし、許可後にゲームを開始
 function requestMotionPermission() {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
-        console.log("iOS のため、モーションセンサーの許可をリクエストします。");
-
         DeviceMotionEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === "granted") {
-                    console.log("モーションセンサーの許可が取得できました。");
-                    startGame(); // 許可後にゲームを開始
+                    startGame();
                 } else {
                     alert("モーションセンサーの許可が必要です。設定を確認してください。");
                 }
@@ -122,16 +133,16 @@ function requestMotionPermission() {
                 console.error("モーションセンサーの許可取得に失敗しました:", error);
             });
     } else {
-        console.log("Android などでは許可不要なので、そのまま開始します。");
-        startGame(); // Androidではすぐにゲームを開始
+        startGame();
     }
 }
 
+// `devicemotion` イベントを追加し、シェイクの計測を開始
 function enableMotion() {
-    console.log("devicemotion イベントを追加します");
     window.addEventListener("devicemotion", handleMotion);
 }
 
+// ページ読み込み時に「ゲーム開始」ボタンを設置し、クリック時に `requestMotionPermission` を実行
 document.addEventListener("DOMContentLoaded", () => {
     document.body.innerHTML += `<button id="startGame">ゲーム開始</button>`;
     document.getElementById("startGame").addEventListener("click", requestMotionPermission);
