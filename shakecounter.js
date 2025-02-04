@@ -66,8 +66,6 @@ function startGame() {
                     <p>振った回数: <span id="shakeCount">0</span></p>
                 `;
 
-
-
                 gameTimer = setTimeout(() => {
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
@@ -132,7 +130,7 @@ function enableMotion() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.body.innerHTML += `<button id="startGame">ゲームを開始!</button>`;
+    document.body.innerHTML += `<button id="startGame">ゲームを開始〜</button>`;
     // ボタンをタップしたらモーションセンサーの許可をリクエスト
     document.getElementById("startGame").addEventListener("click", requestMotionPermission);
     document.getElementById("startGame").addEventListener("click", startGame);
