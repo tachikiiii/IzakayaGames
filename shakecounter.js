@@ -1,7 +1,7 @@
 let shakeCount = 0;
 let lastX = null, lastY = null, lastZ = null;
-const threshold = 8; // シェイクの感度を少し厳しくする
-const debounceTime = 500; // 500ms 以内の連続カウントを防ぐ
+const threshold = 5; // 値が大きいほどシェイクの感度が鈍る
+const debounceTime = 500; // 数値以内の連続カウントを防ぐ
 let lastShakeTime = 0;
 let gameTimer = null;
 let countdownSound = new Audio("countdown.mp3");
