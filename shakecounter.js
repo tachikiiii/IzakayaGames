@@ -14,6 +14,11 @@ function getCurrentPlayer() {
 }
 
 function handleMotion(event) {
+    if (!event.accelerationIncludingGravity) {
+        console.warn("加速度データが取得できません");
+        return;
+    }
+
     const { x, y, z } = event.accelerationIncludingGravity;
 
     if (lastX !== null && lastY !== null && lastZ !== null) {
@@ -59,7 +64,7 @@ function startGame() {
                     <p>スマホを振ってください！</p>
                     <p>振った回数: <span id="shakeCount">0</span></p>
                 `;
-                enableMotion();
+                requestMotionPermission();
                 gameTimer = setTimeout(() => {
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
@@ -84,7 +89,7 @@ function startGame() {
                         });
                     }
                 }, 10000);
-            }, 100); // 0.5秒遅延させて音声と遷移を同期
+            }, 100);
         }
     }, 1000);
 }
@@ -93,24 +98,30 @@ function updateSessionStorage() {
     sessionStorage.setItem("players", JSON.stringify(players));
 }
 
+// モーションセンサーの許可をリクエスト
 function requestMotionPermission() {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
+        console.log("iOS のため、モーションセンサーの許可をリクエストします。");
         DeviceMotionEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === "granted") {
+                    console.log("モーションセンサーの許可が取得できました。");
                     enableMotion();
                 } else {
-                    alert("モーションセンサーの使用が許可されていません。");
+                    alert("モーションセンサーの許可が必要です。設定を確認してください。");
                 }
             })
-            .catch(console.error);
+            .catch(error => {
+                console.error("モーションセンサーの許可取得に失敗しました:", error);
+            });
     } else {
-        // Android などでは許可不要なのでそのまま実行
+        console.log("Android などでは許可不要なので、そのまま開始します。");
         enableMotion();
     }
 }
 
 function enableMotion() {
+    console.log("devicemotion イベントを追加します");
     window.addEventListener("devicemotion", handleMotion);
 }
 
