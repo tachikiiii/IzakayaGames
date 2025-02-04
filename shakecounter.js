@@ -99,39 +99,11 @@ function updateSessionStorage() {
     sessionStorage.setItem("players", JSON.stringify(players));
 }
 
-// ユーザー操作内でモーションセンサーの許可をリクエスト
-function requestMotionPermission() {
-    if (typeof DeviceMotionEvent.requestPermission === "function") {
-        console.log("iOS のため、モーションセンサーの許可をリクエストします。");
 
-        DeviceMotionEvent.requestPermission()
-            .then(permissionState => {
-                if (permissionState === "granted") {
-                    console.log("モーションセンサーの許可が取得できました。");
-                    enableMotion();
-                    document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
-                } else {
-                    alert("モーションセンサーの許可が必要です。設定を確認してください。");
-                }
-            })
-            .catch(error => {
-                console.error("モーションセンサーの許可取得に失敗しました:", error);
-            });
-    } else {
-        console.log("Android などでは許可不要なので、そのまま開始します。");
-        enableMotion();
-        document.getElementById("startMotion").style.display = "none"; // ボタンを非表示
-    }
-}
-
-function enableMotion() {
-    console.log("devicemotion イベントを追加します");
-    window.addEventListener("devicemotion", handleMotion);
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.innerHTML += `<button id="startGame">ゲームを開始〜</button>`;
     // ボタンをタップしたらモーションセンサーの許可をリクエスト
-    document.getElementById("startGame").addEventListener("click", requestMotionPermission);
+    // document.getElementById("startGame").addEventListener("click", requestMotionPermission);
     document.getElementById("startGame").addEventListener("click", startGame);
 });
