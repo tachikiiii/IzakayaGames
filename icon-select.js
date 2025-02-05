@@ -3,7 +3,7 @@ let players = [];
 let currentPlayer = 1;
 
 // sessionStorageから選択人数を取得（なければデフォルト3人）
-const maxPlayers = Number(sessionStorage.getItem('playerCount')) || 3;
+const maxPlayers = Number(sessionStorage.getItem('playerCount'));
 console.log(`選択した人数: ${maxPlayers}`);
 
 // ページ読み込み後に各プレイヤー用の白い枠（アイコンフレーム）を初期表示する
@@ -72,18 +72,7 @@ function selectIcon(iconId) {
   } else {
     // 次のプレイヤーへ進む：番号更新とヘッダーの更新
     currentPlayer++;
-    updateHeader();
   }
-}
-
-/**
- * ヘッダーのテキストを現在のプレイヤー番号に合わせて更新する
- * また、activeクラスの付与も更新する
- */
-function updateHeader() {
-  const header = document.querySelector("header h1");
-  header.textContent = `${currentPlayer}人目のアイコンを選んでください`;
-  updateActiveFrame();
 }
 
 /**
