@@ -30,7 +30,11 @@ function handleMotion(event) {
             const currentTime = Date.now();
             if (currentTime - lastShakeTime > debounceTime) {
                 shakeCount++;
-                document.getElementById("shakeCount").innerText = shakeCount;
+                // ゲーム中のHTML内にある要素の更新
+                const shakeCountEl = document.getElementById("shakeCount");
+                if (shakeCountEl) {
+                    shakeCountEl.innerText = shakeCount;
+                }
                 lastShakeTime = currentTime;
             }
         }
@@ -73,14 +77,14 @@ function startGame() {
                     player.shakeCount = shakeCount;
                     updateSessionStorage();
 
-                    document.body.innerHTML += `
+                    document.body.innerHTML = `
                         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんの結果・・・${shakeCount}回</h1>
                     `;
 
                     // 次のプレイヤー or 結果表示
                     if (currentPlayerIndex + 1 < players.length) {
                         currentPlayerIndex++;
-                        document.body.innerHTML += `<button id="nextPlayer">次のプレイヤーへ</button>`;
+                        document.body.innerHTML += `<p>次のプレイヤーは、、</p><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さん<button id="nextPlayer">次のプレイヤーへ</button>`;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
                         document.body.innerHTML += `<button id="resultPage">結果を見る</button>`;
@@ -142,8 +146,16 @@ function enableMotion() {
     window.addEventListener("devicemotion", handleMotion);
 }
 
-// ページ読み込み時に「ゲーム開始」ボタンを設置し、クリック時に `requestMotionPermission` を実行
-document.addEventListener("DOMContentLoaded", () => {
-    document.body.innerHTML += `<button id="startGame">ゲーム開始</button>`;
-    document.getElementById("startGame").addEventListener("click", requestMotionPermission);
-});
+// ★ 初期の「ゲーム開始」ボタンのクリック時には、まず中間画面を表示する
+document.getElementById("startGame").addEventListener("click", showGame);
+
+// ★ 「ゲーム開始」ボタンを押した後に表示する中間画面の作成
+function showGame() {
+    const player = getCurrentPlayer(); // 現在のプレイヤー情報を取得
+    document.body.innerHTML = `
+        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
+        <button id="startButton">スタート</button>
+    `;
+    // 中間画面の「スタート」ボタンをクリックしたら、モーションセンサーの許可をリクエスト（結果としてゲーム開始）
+    document.getElementById("startButton").addEventListener("click", requestMotionPermission);
+}
