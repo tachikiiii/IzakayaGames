@@ -157,3 +157,20 @@
     align-items: center; 
     margin-top: 50px;
   }
+
+/* 各アイコン枠自体は余白等のレイアウト調整に使う */
+.icon-frame {
+  margin: 10px;
+  padding: 5px;
+}
+
+/* 初期状態の画像は透明な枠を指定 */
+.icon-frame img {
+  border: 2px solid transparent;
+}
+
+/* .icon-frameにactiveクラスが付いている場合、画像に黒い枠を付ける */
+.icon-frame.active img {
+  border: 2px solid black;
+  border-radius: 50%;
+}

@@ -1,93 +1,125 @@
-// グローバル変数：選択したプレイヤー情報と現在のプレイヤー番号
+// グローバル変数：選択済みプレイヤー情報と現在のプレイヤー番号
 let players = [];
 let currentPlayer = 1;
 
-// sessionStorageから選択した人数を取得（存在しない場合はデフォルト3人）
-const maxPlayers = Number(sessionStorage.getItem('playerCount')) || 3; // デフォルト3人
+// sessionStorageから選択人数を取得（なければデフォルト3人）
+const maxPlayers = Number(sessionStorage.getItem('playerCount')) || 3;
 console.log(`選択した人数: ${maxPlayers}`);
 
+// ページ読み込み後に各プレイヤー用の白い枠（アイコンフレーム）を初期表示する
+document.addEventListener('DOMContentLoaded', initIconFrames);
+
 /**
- * 指定されたアイコンIDでプレイヤーを登録し、画面を更新する
+ * 各プレイヤー用のアイコンフレームを初期化する
+ * ・maxPlayersの数だけ、"selected-icons"コンテナ内に枠を作成
+ * ・各枠には「n人目」とラベルと、初期画像（iconframe.png）を表示
+ * ・最初の枠にはactiveクラスを付与して黒い枠を表示する
+ */
+function initIconFrames() {
+  const container = document.getElementById("selected-icons");
+  container.innerHTML = ""; // 既存内容のクリア
+  for (let i = 1; i <= maxPlayers; i++) {
+    const frame = document.createElement("div");
+    frame.className = "icon-frame";
+    // 最初のプレイヤー枠にactiveクラスを追加
+    if (i === 1) {
+      frame.classList.add("active");
+    }
+    // 各枠にプレイヤー番号を示す属性を設定
+    frame.setAttribute("data-player", i);
+    frame.innerHTML = `
+      <p>${i}人目</p>
+      <img src="./img/iconframe.png" alt="未選択">
+    `;
+    container.appendChild(frame);
+  }
+}
+
+/**
+ * アイコンが選択されたときの処理
+ * ・同じアイコンが選ばれていないかチェック
+ * ・現在のプレイヤー分の情報を登録し、対応する枠にアイコン画像を表示する
+ * ・全員分選択済みならヘッダー・「次へ」ボタンを更新、未完了なら次のプレイヤーへ
  * @param {string} iconId - 選択されたアイコンのID
  */
 function selectIcon(iconId) {
-  // すでに同じアイコンが選ばれている場合は警告を出して終了
+  // 同じアイコンが既に選ばれていれば警告
   if (players.some(player => player.icon === iconId)) {
     alert("このアイコンはすでに選択されています。別のアイコンを選んでください。");
     return;
   }
-
-  // すでに最大人数に達している場合は何もしない
+  // 既に最大人数に達している場合は何もしない
   if (players.length >= maxPlayers) {
     return;
   }
-
-  // 現在のプレイヤー情報を配列に追加し、該当アイコンに選択済みのクラスを付与
+  
+  // 現在のプレイヤーのアイコンを登録し、ボタン自体も無効化
   players.push({ player: currentPlayer, icon: iconId });
   document.querySelector(`#${iconId}`).classList.add("disabled", "selected");
-
-  // 選択したアイコンを画面に表示する
-  displaySelectedIcon(currentPlayer, iconId);
-
-  // すべてのプレイヤー登録が完了したか確認
+  
+  // 該当プレイヤーの枠に選ばれたアイコン画像を表示する
+  updateIconFrame(currentPlayer, iconId);
+  
+  // すべてのプレイヤー分選択済みの場合
   if (players.length === maxPlayers) {
-    // ヘッダーのテキストを変更して完了を表示
+    // ヘッダーを完了メッセージに変更
     const header = document.querySelector("header h1");
     header.textContent = "すべてのプレイヤーの登録が完了しました";
-    // 「次へ」ボタンを表示し、クリック時にゲーム開始関数を呼び出す
+    // 「次へ」ボタンを表示し、クリック時にゲーム開始へ遷移
     const nextButton = document.querySelector("#next");
     nextButton.style.display = "inline-block";
     nextButton.addEventListener("click", startGame);
   } else {
-    // 次のプレイヤーの登録に進む
+    // 次のプレイヤーへ進む：番号更新とヘッダーの更新
     currentPlayer++;
     updateHeader();
   }
 }
 
-// ヘッダーのテキストを現在のプレイヤー番号に合わせて更新する
+/**
+ * ヘッダーのテキストを現在のプレイヤー番号に合わせて更新する
+ * また、activeクラスの付与も更新する
+ */
 function updateHeader() {
   const header = document.querySelector("header h1");
   header.textContent = `${currentPlayer}人目のアイコンを選んでください`;
+  updateActiveFrame();
 }
 
 /**
- * 選択済みのアイコンを画面に表示する
- * @param {number} playerNumber - プレイヤー番号
+ * 対応するプレイヤー枠の画像を、選択されたアイコン画像に更新する
+ * @param {number} playerNumber - 更新対象のプレイヤー番号
  * @param {string} iconId - 選択されたアイコンのID
  */
-function displaySelectedIcon(playerNumber, iconId) {
-  // すでにコンテナが存在すれば取得、なければ新規作成する
-  const selectedIconsContainer = document.getElementById("selectedIcons") || createSelectedIconsContainer();
-  
-  // プレイヤーごとの表示用要素を作成
-  const playerDiv = document.createElement("div");
-  playerDiv.className = "selected-icon";
-  playerDiv.innerHTML = `
-    <p>${playerNumber}人目</p>
-    <img src="./img/btn_${iconId}.png" alt="${iconId}">
-  `;
-  
-  // コンテナに追加して表示
-  selectedIconsContainer.appendChild(playerDiv);
+function updateIconFrame(playerNumber, iconId) {
+  const container = document.getElementById("selected-icons");
+  // data-player属性がplayerNumberに一致する枠を取得
+  const frame = container.querySelector(`.icon-frame[data-player='${playerNumber}']`);
+  if (frame) {
+    // ラベルはそのまま、画像を選択されたアイコンに差し替え
+    frame.innerHTML = `
+      <p>${playerNumber}人目</p>
+      <img src="./img/btn_${iconId}.png" alt="${iconId}">
+    `;
+  }
 }
 
 /**
- * 選択済みアイコン表示用のコンテナを作成し、bodyに追加する関数
- * @returns {HTMLElement} 作成したコンテナ要素
+ * 現在のプレイヤーの枠にactiveクラスを付与し、
+ * 他の枠からはactiveクラスを外す
  */
-function createSelectedIconsContainer() {
-  const container = document.createElement("div");
-  container.id = "selectedIcons";
-  container.style.display = "flex";
-  container.style.justifyContent = "center";
-  container.style.marginTop = "20px";
-  
-  document.body.appendChild(container);
-  return container;
+function updateActiveFrame() {
+  const container = document.getElementById("selected-icons");
+  container.querySelectorAll(".icon-frame").forEach(frame => frame.classList.remove("active"));
+  const nextFrame = container.querySelector(`.icon-frame[data-player='${currentPlayer}']`);
+  if (nextFrame) {
+    nextFrame.classList.add("active");
+  }
 }
 
-// プレイヤー情報（アイコン、人数、初期シェイク回数）をsessionStorageに保存する
+/**
+ * プレイヤー情報（番号、アイコン、初期シェイク回数）をsessionStorageに保存する
+ */
 function savePlayersToSessionStorage() {
   sessionStorage.setItem(
     "players",
@@ -101,8 +133,11 @@ function savePlayersToSessionStorage() {
   );
 }
 
-// 「次へ」ボタンが押されたときに、プレイヤー情報を保存しゲーム開始ページへ遷移する
+/**
+ * 「次へ」ボタンが押されたときの処理
+ * ・プレイヤー情報を保存し、ゲーム開始ページへ遷移する
+ */
 function startGame() {
   savePlayersToSessionStorage();
-  window.location.href = "shakecounter.html"; // ゲーム開始画面へ遷移
+  window.location.href = "shakecounter.html";
 }
