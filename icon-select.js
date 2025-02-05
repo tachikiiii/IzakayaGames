@@ -72,6 +72,7 @@ function selectIcon(iconId) {
   } else {
     // 次のプレイヤーへ進む：番号更新とヘッダーの更新
     currentPlayer++;
+    updateActiveFrame();
   }
 }
 
