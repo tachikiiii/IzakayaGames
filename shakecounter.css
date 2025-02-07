@@ -2,7 +2,8 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 50px;
-  background-color: #e0f7fa;
+  background: url(./img/background.png);
+  background-repeat: repeat;
 }
 
 .container {

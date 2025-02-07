@@ -1,4 +1,8 @@
 
+body{
+    background: url(./img/background.png);
+    background-repeat: repeat;
+}
 /* Popup background design */
 .popup-background {
     position: fixed;
@@ -7,9 +11,10 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    background-color: gray;
     opacity: 0.5;
     display: none; /* Initially hidden */
+    background: url(./img/background.png);
+    background-repeat: repeat;
 }
 
 /* Popup container design */
