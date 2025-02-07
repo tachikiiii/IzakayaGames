@@ -12,6 +12,20 @@
     background-repeat: repeat;
   }
 
+  .barrier{
+    border: 5px solid #5B4746;
+    padding: 40px;
+    margin: 40px;
+    width: calc(100vw - 120px);
+    display: inline-block;
+    background-color: #E1D1B7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   header {
     text-align: center;
     padding-top: 8px;
@@ -110,11 +124,11 @@
   .playerSelect-button{
     display: flex;
     align-items: center;
-    margin: 50px 50px 50px 50px;
+    margin: 50px 20px 50px 20px;
     justify-content: space-evenly;
   }
 
-  .testButton{
+  .buttonDesign{
     display: block;
     text-decoration: none;
     width: auto;
@@ -122,14 +136,14 @@
     font-size: 20px;
     padding: 10px 20px 10px 20px;
     font-weight: bold;
-    border: 2px solid #B7BD53;
+    border: 2px solid #BF7F64;
     color: #000;
     margin: 0px 25px 0px 25px;
   }
 
-  .testButton:hover {
+  .buttonDesign:hover {
     color: #fff;
-    background: #B7BD53;
+    background: #BF7F64;
   }
 
   .playerSelect-back{
