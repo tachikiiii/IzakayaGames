@@ -189,3 +189,13 @@
   border: 2px solid black;
   border-radius: 50%;
 }
+
+.inputAmount{
+  font-size: 30px;
+  padding: 10px 20px 10px 20px;
+  border-width: 3px;
+}
+
+.inputAmount input {
+  font-size: 30px;  /* Ensures the text inside the input is 30px */
+}

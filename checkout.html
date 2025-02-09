@@ -8,12 +8,16 @@
 </head>
 
 <body>
-    <form id="inputForm">
-        <p>お会計の入力してください。<br>
-        <input type="text" name="amount" id="amount" required>円</p>
-    </form>
-    
-    <button id="calculateBtn">計算する</button>
+    <div class="barrier">
+        <img src="img/lettering-checkout.png">
+    </div>
+
+    <div class="inputAmount">
+        <input type="text" name="amount" id="amount" required>
+        <span>円</span>
+    </div>
+
+    <button class="buttonDesign" id="calculateBtn">計算する</button>
     
     <script src="checkout.js"></script>
 </body>

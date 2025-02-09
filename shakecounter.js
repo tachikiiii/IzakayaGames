@@ -84,16 +84,15 @@ function startGame() {
                     document.body.innerHTML = `
                         <div class="barrier">
                         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんの結果・・・${shakeCount}回</h1>
-                        </div>
                     `;
 
                     // 次のプレイヤー or 結果表示
                     if (currentPlayerIndex + 1 < players.length) {
                         currentPlayerIndex++;
-                        document.body.innerHTML += `<p>次のプレイヤーは、、</p><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さん<button id="nextPlayer">次のプレイヤーへ</button>`;
+                        document.body.innerHTML += `<p>次のプレイヤーは、、</p><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さん<button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button></div>`;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
-                        document.body.innerHTML += `<button class="buttonDesign" id="resultPage">結果を見る</button>`;
+                        document.body.innerHTML += `<button class="buttonDesign" id="resultPage">結果を見る</button><div>`;
                         document.getElementById("resultPage").addEventListener("click", showResults);
                     }
                 }, 10000);
@@ -113,10 +112,9 @@ function showResults() {
                 <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:50px; height:50px;">
                 ${player.icon} さん: <strong>${player.shakeCount}回</strong>
             </li>
-            </div>
         `;
     });
-    resultHTML += `</ul><button class="buttonDesign" id="checkoutPage">お会計へ</button>`;
+    resultHTML += `</div></ul><button class="buttonDesign" id="checkoutPage">お会計へ</button>`;
 
     document.body.innerHTML = resultHTML;
     document.getElementById("checkoutPage").addEventListener("click", () => {

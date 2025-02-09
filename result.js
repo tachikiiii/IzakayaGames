@@ -6,10 +6,7 @@ const numPeople=sessionStorage.getItem("playerCount");
 const players = JSON.parse(sessionStorage.getItem('players'));
 const mode = sessionStorage.getItem("mode")
 
-let finalOutcome = players.map(player => ({
-    icon: player.icon,
-    lost: 0
-}));
+let finalOutcome =0
 
 
 // playersの配列の例
@@ -89,35 +86,74 @@ function showPopup(){
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = ''; 
 
-    finalOutcome.forEach((player, index) => {
+    // 負けた人のアイコンと支払額を先に表示する
+    const firstPlayer = finalOutcome[0];
+    const firstPersonDiv = document.createElement('div');
+    
+    const firstImgElement = document.createElement('img');
+    firstImgElement.src = `./img/btn_${firstPlayer.icon}.png`; 
+    firstImgElement.alt = `btn_image_0`;
+    firstImgElement.style.verticalAlign = 'middle';
+
+    const firstAmountSpan = document.createElement('span');
+    firstAmountSpan.textContent = `${firstPlayer.payment} 円`;
+    firstAmountSpan.style.marginLeft = '10px';
+
+    firstPersonDiv.appendChild(firstImgElement);
+    firstPersonDiv.appendChild(firstAmountSpan);
+    
+    resultDiv.appendChild(firstPersonDiv);
+
+    // 負けた人以外のアイコンを表示
+    finalOutcome.slice(1).forEach((player, index) => {
         const personDiv = document.createElement('div');
         
         const imgElement = document.createElement('img');
         imgElement.src = `./img/btn_${player.icon}.png`; 
-        imgElement.alt = `btn_image_${index}`;
+        imgElement.alt = `btn_image_${index+1}`;
         imgElement.style.verticalAlign = 'middle'; 
 
-        const amountSpan = document.createElement('span');
-        amountSpan.textContent = `${player.payment} 円`;
-        amountSpan.style.marginLeft = '10px'; 
-
         personDiv.appendChild(imgElement);
-        personDiv.appendChild(amountSpan);
 
         resultDiv.appendChild(personDiv);
     });
+
+
+    // 負けた人以外の金額を表示
+    const elsePlayer = finalOutcome[0];
+    const amountSpan = document.createElement('span');
+    amountSpan.textContent = `${elsePlayer.payment} 円`;
+
+    resultDiv.appendChild(amountSpan);
+
+    // 「最初の画面に戻る」ボタン
+    const button = document.createElement('button');
+    button.textContent = '最初の画面に戻る'; 
+    button.classList.add('buttonDesign'); 
+    button.style.marginTop = '10px'; 
+    button.onclick = function() {
+        window.location.href = 'mode-select.html'; 
+    };
+
+    resultDiv.appendChild(button);
 }
 
 // ポップアップを表示する
 if (amount) {
     if(mode){
+        document.getElementById('loadingMessage').innerHTML = '<img src="img/icon_result.png" alt="Result Icon">';
+        
         // 3秒経ってからポップアップを表示する
         setTimeout(function() {
             document.getElementById('loadingMessage').style.display = 'none';
             document.getElementById('popupBackground').style.display = 'block';
             document.getElementById('popup').style.display = 'block';
 
-            //calculateFinalOutcome(); //ゲームが複数になった場合にコメントアウトを外す
+            finalOutcome = players.map(player => ({
+                icon: player.icon,
+                lost: 0
+            }));
+                        //calculateFinalOutcome(); //ゲームが複数になった場合にコメントアウトを外す
             calculateFinalOutcomeShakeCount();
             calculatePayment(parseInt(amount));
             showPopup();

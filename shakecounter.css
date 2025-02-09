@@ -74,7 +74,7 @@ button:hover {
 }
 
 #shakeCount {
-  display:block
+  display:block;
   color: red;
   background: #fff;
   font-size: 40px;
