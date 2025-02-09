@@ -190,9 +190,20 @@
 .inputAmount{
   font-size: 30px;
   padding: 10px 20px 10px 20px;
+  margin-bottom: 20px;
   border-width: 3px;
 }
 
 .inputAmount input {
   font-size: 20px;
+}
+
+.image-container{
+  padding: 20px;
+  margin: 20px;
+  width: calc(100vw - 120px);
+  background-color: #BF7F64;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
