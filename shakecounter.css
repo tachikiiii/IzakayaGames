@@ -4,15 +4,30 @@ body {
   padding: 50px;
   background: url(./img/background.png);
   background-repeat: repeat;
+
+  /* test */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.barrier{
+  border: 5px solid #5B4746;
+  margin: 0px 0px 20px 0px;
+  width: calc(100vw - 120px);
+  background-color: #E1D1B7;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /*display: flex;
+  justify-content: center;
+  align-items: center;*/
 }
 
 .container {
-  border: 2px solid #00838f;
   padding: 20px;
-  display: inline-block;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
 }
 
 h1 {
@@ -25,7 +40,8 @@ p {
   color: #004d40;
 }
 
-button {
+/* ボタンのデザインを変えたので、後に削除予定 */
+/*button {
   padding: 10px 20px;
   margin-top: 20px;
   background-color: #00796b;
@@ -37,6 +53,24 @@ button {
 
 button:hover {
   background-color: #004d40;
+}*/
+
+.buttonDesign{
+  display: block;
+  text-decoration: none;
+  width: auto;
+  border-radius: 100vh;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  font-weight: bold;
+  border: 2px solid #BF7F64;
+  color: #000;
+  margin: 0px 25px 0px 25px;
+}
+
+.buttonDesign:hover {
+  color: #fff;
+  background: #BF7F64;
 }
 
 #shakeCount {

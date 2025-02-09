@@ -56,17 +56,21 @@ function startGame() {
         countdownSound.play();
         if (countdown > 0) {
             document.body.innerHTML = `
+                <div class="barrier">
                 <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
                 <p>スマホを振ってください！</p>
                 <h2>${countdown}</h2>
+                </div>
             `;
         } else {
             clearInterval(countdownInterval);
             setTimeout(() => {
                 document.body.innerHTML = `
+                    <div class="barrier">
                     <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
                     <p>スマホを振ってください！</p>
                     <p>振った回数: <span id="shakeCount">0</span></p>
+                    </div>
                 `;
 
                 enableMotion();
@@ -78,7 +82,9 @@ function startGame() {
                     updateSessionStorage();
 
                     document.body.innerHTML = `
+                        <div class="barrier">
                         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんの結果・・・${shakeCount}回</h1>
+                        </div>
                     `;
 
                     // 次のプレイヤー or 結果表示
@@ -87,7 +93,7 @@ function startGame() {
                         document.body.innerHTML += `<p>次のプレイヤーは、、</p><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さん<button id="nextPlayer">次のプレイヤーへ</button>`;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
-                        document.body.innerHTML += `<button id="resultPage">結果を見る</button>`;
+                        document.body.innerHTML += `<button class="buttonDesign" id="resultPage">結果を見る</button>`;
                         document.getElementById("resultPage").addEventListener("click", showResults);
                     }
                 }, 10000);
@@ -100,16 +106,17 @@ function startGame() {
 function showResults() {
     players.sort((a, b) => b.shakeCount - a.shakeCount); // シェイク回数の多い順に並べる
 
-    let resultHTML = `<h1>ゲーム結果</h1><ul style="list-style: none;">`;
+    let resultHTML = `<div class="barrier"><h1>ゲーム結果</h1><ul style="list-style: none;">`;
     players.forEach(player => {
         resultHTML += `
             <li>
                 <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:50px; height:50px;">
                 ${player.icon} さん: <strong>${player.shakeCount}回</strong>
             </li>
+            </div>
         `;
     });
-    resultHTML += `</ul><button id="checkoutPage">お会計へ</button>`;
+    resultHTML += `</ul><button class="buttonDesign" id="checkoutPage">お会計へ</button>`;
 
     document.body.innerHTML = resultHTML;
     document.getElementById("checkoutPage").addEventListener("click", () => {
@@ -153,8 +160,10 @@ document.getElementById("startGame").addEventListener("click", showGame);
 function showGame() {
     const player = getCurrentPlayer(); // 現在のプレイヤー情報を取得
     document.body.innerHTML = `
+        <div class="barrier">
         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
-        <button id="startButton">スタート</button>
+        </div>
+        <button class="buttonDesign" id="startButton">スタート</button>
     `;
     // 中間画面の「スタート」ボタンをクリックしたら、モーションセンサーの許可をリクエスト（結果としてゲーム開始）
     document.getElementById("startButton").addEventListener("click", requestMotionPermission);
