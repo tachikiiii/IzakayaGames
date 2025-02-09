@@ -123,7 +123,7 @@
   .playerSelect-button{
     display: flex;
     align-items: center;
-    margin: 50px 20px 50px 20px;
+    margin: 50px 10px 50px 10px;
     justify-content: space-evenly;
   }
 
@@ -194,5 +194,5 @@
 }
 
 .inputAmount input {
-  font-size: 30px;  /* Ensures the text inside the input is 30px */
+  font-size: 20px;
 }

@@ -1,7 +1,6 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  padding: 50px;
   background: url(./img/background.png);
   background-repeat: repeat;
   display: flex;
@@ -12,6 +11,7 @@ body {
 .barrier{
   border: 5px solid #5B4746;
   margin: 0px 0px 20px 0px;
+  padding: 40px;
   width: calc(100vw - 120px);
   background-color: #E1D1B7;
   border-radius: 10px;

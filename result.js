@@ -141,7 +141,9 @@ function showPopup(){
 // ポップアップを表示する
 if (amount) {
     if(mode){
-        document.getElementById('loadingMessage').innerHTML = '<img src="img/icon_result.png" alt="Result Icon">';
+        const loadingMessageElement = document.getElementById('loadingMessage');
+        loadingMessageElement.classList.add('loading-message');
+        loadingMessageElement.innerHTML = '<img src="img/icon_result.png">';
         
         // 3秒経ってからポップアップを表示する
         setTimeout(function() {

@@ -1,11 +1,12 @@
 
 body{
+    font-family: Arial, sans-serif;
+    text-align: center;
     background: url(./img/background.png);
     background-repeat: repeat;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
 }
 /* Popup background design */
 .popup-background {
@@ -97,4 +98,10 @@ body{
   .buttonDesign:hover {
     color: #fff;
     background: #BF7F64;
+  }
+
+  .loading-message{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
