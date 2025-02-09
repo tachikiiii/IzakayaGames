@@ -93,34 +93,30 @@ function showPopup(){
     const firstImgElement = document.createElement('img');
     firstImgElement.src = `./img/btn_${firstPlayer.icon}.png`; 
     firstImgElement.alt = `btn_image_0`;
-    firstImgElement.style.verticalAlign = 'middle';
 
     const firstAmountSpan = document.createElement('span');
     firstAmountSpan.textContent = `${firstPlayer.payment} 円`;
     firstAmountSpan.style.marginLeft = '10px';
-
-    firstPersonDiv.appendChild(firstImgElement);
-    firstPersonDiv.appendChild(firstAmountSpan);
     
-    resultDiv.appendChild(firstPersonDiv);
+    resultDiv.appendChild(firstImgElement);
+    resultDiv.appendChild(firstAmountSpan);
 
     // 負けた人以外のアイコンを表示
+    const personDiv = document.createElement('div');
+    personDiv.classList.add('elsePlayer-icon');
+
     finalOutcome.slice(1).forEach((player, index) => {
-        const personDiv = document.createElement('div');
-        
+
         const imgElement = document.createElement('img');
         imgElement.src = `./img/btn_${player.icon}.png`; 
         imgElement.alt = `btn_image_${index+1}`;
-        imgElement.style.verticalAlign = 'middle'; 
 
         personDiv.appendChild(imgElement);
-
-        resultDiv.appendChild(personDiv);
     });
-
+    resultDiv.appendChild(personDiv);
 
     // 負けた人以外の金額を表示
-    const elsePlayer = finalOutcome[0];
+    const elsePlayer = finalOutcome[1];
     const amountSpan = document.createElement('span');
     amountSpan.textContent = `${elsePlayer.payment} 円`;
 

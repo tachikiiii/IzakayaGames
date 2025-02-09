@@ -64,12 +64,6 @@ body{
     color: white;
 }
 
-/* Popup content design */
-.popup > .content {
-    padding: 10px;
-    text-align: center;
-}
-
 /* Button container design */
 .button-container {
     display: flex;
@@ -92,7 +86,6 @@ body{
     font-weight: bold;
     border: 2px solid #BF7F64;
     color: #000;
-    margin: 0px 25px 0px 25px;
   }
 
   .buttonDesign:hover {
