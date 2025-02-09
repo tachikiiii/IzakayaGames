@@ -3,7 +3,6 @@
   body {
     font-family: Arial, sans-serif;
     text-align: center;
-    padding: 50px;
     background: url(./img/background.png);
     background-repeat: repeat;
     display: flex;
@@ -169,7 +168,6 @@
     display: flex;
     flex-direction: column;
     align-items: center; 
-    margin-top: 50px;
   }
 
 /* 各アイコン枠自体は余白等のレイアウト調整に使う */
