@@ -88,17 +88,21 @@ function showPopup(){
 
     // 負けた人のアイコンと支払額を先に表示する
     const firstPlayer = finalOutcome[0];
-    const firstPersonDiv = document.createElement('div');
     
+    const firstImgDiv = document.createElement('div');
     const firstImgElement = document.createElement('img');
     firstImgElement.src = `./img/btn_${firstPlayer.icon}.png`; 
     firstImgElement.alt = `btn_image_0`;
+    firstImgElement.style = 'width:150px; height:150px;';
+
+    firstImgDiv.appendChild(firstImgElement)
+    resultDiv.appendChild(firstImgDiv);
 
     const firstAmountSpan = document.createElement('span');
     firstAmountSpan.textContent = `${firstPlayer.payment} 円`;
-    firstAmountSpan.style.marginLeft = '10px';
+    firstAmountSpan.style.fontSize = '30px';
+    firstAmountSpan.style.marginBottom = '10px';
     
-    resultDiv.appendChild(firstImgElement);
     resultDiv.appendChild(firstAmountSpan);
 
     // 負けた人以外のアイコンを表示
@@ -110,6 +114,7 @@ function showPopup(){
         const imgElement = document.createElement('img');
         imgElement.src = `./img/btn_${player.icon}.png`; 
         imgElement.alt = `btn_image_${index+1}`;
+        imgElement.style = 'width:50px; height:50px;';
 
         personDiv.appendChild(imgElement);
     });
@@ -151,7 +156,7 @@ if (amount) {
                 icon: player.icon,
                 lost: 0
             }));
-                        //calculateFinalOutcome(); //ゲームが複数になった場合にコメントアウトを外す
+            //calculateFinalOutcome(); //ゲームが複数になった場合にコメントアウトを外す
             calculateFinalOutcomeShakeCount();
             calculatePayment(parseInt(amount));
             showPopup();

@@ -8,7 +8,7 @@ body{
     flex-direction: column;
     align-items: center; 
 }
-/* Popup background design */
+
 .popup-background {
     position: fixed;
     z-index: 100;
@@ -17,32 +17,30 @@ body{
     height: 100vh;
     width: 100vw;
     opacity: 0.5;
-    display: none; /* Initially hidden */
+    display: none; 
     background: url(./img/background.png);
     background-repeat: repeat;
 }
 
-/* Popup container design */
 .popup {
     z-index: 101;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center the popup */
+    transform: translate(-50%, -50%); 
     height: auto;
     width: auto;
-    max-width: 90%; /* Ensure the popup doesn't exceed the width of the screen */
-    max-height: 90%; /* Ensure the popup doesn't exceed the height of the screen */
-    overflow: auto; /* Add scroll if the content overflows */
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
     background-color: #E1D1B7;
     border: 5px solid #5B4746;
     width: calc(100vw - 120px);
     box-shadow: 0px 0px 3px 1px gray;
-    display: none; /* Initially hidden */
+    display: none;
     padding: 20px;
 }
 
-/* Close button design */
 .popup > .close-button {
     --size: 20px;
     position: absolute;
@@ -64,7 +62,6 @@ body{
     color: white;
 }
 
-/* Button container design */
 .button-container {
     display: flex;
     align-items: center;
@@ -86,15 +83,21 @@ body{
     font-weight: bold;
     border: 2px solid #BF7F64;
     color: #000;
-  }
+}
 
-  .buttonDesign:hover {
+.buttonDesign:hover {
     color: #fff;
     background: #BF7F64;
-  }
+}
 
-  .loading-message{
+p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.result {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+}
