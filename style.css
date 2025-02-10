@@ -138,6 +138,7 @@
     border: 2px solid #BF7F64;
     color: #000;
     margin: 0px 25px 0px 25px;
+    cursor: pointer;
   }
 
   .buttonDesign:hover {
