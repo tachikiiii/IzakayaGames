@@ -93,7 +93,7 @@ function showPopup(){
     const firstImgElement = document.createElement('img');
     firstImgElement.src = `./img/btn_${firstPlayer.icon}.png`; 
     firstImgElement.alt = `btn_image_0`;
-    firstImgElement.style = 'width:150px; height:150px;';
+    firstImgElement.style = 'width:200px; height:200px;';
 
     firstImgDiv.appendChild(firstImgElement)
     resultDiv.appendChild(firstImgDiv);
@@ -101,7 +101,7 @@ function showPopup(){
     const firstAmountSpan = document.createElement('span');
     firstAmountSpan.textContent = `${firstPlayer.payment} 円`;
     firstAmountSpan.style.fontSize = '30px';
-    firstAmountSpan.style.marginBottom = '10px';
+    firstAmountSpan.style.marginBottom = '20px';
     
     resultDiv.appendChild(firstAmountSpan);
 

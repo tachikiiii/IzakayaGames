@@ -105,10 +105,10 @@ function startGame() {
 function showResults() {
     players.sort((a, b) => b.shakeCount - a.shakeCount); // シェイク回数の多い順に並べる
 
-    let resultHTML = `<div class="barrier"><h1>ゲーム結果</h1><ul style="list-style: none;">`;
+    let resultHTML = `<div class="barrier"><img src="img/lettering-shakecounter.png">`;
     players.forEach(player => {
         resultHTML += `
-            <li>
+            <li style="list-style-type: none;">
                 <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:50px; height:50px;">
                 ${player.icon} さん: <strong>${player.shakeCount}回</strong>
             </li>
