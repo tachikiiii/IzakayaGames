@@ -207,3 +207,9 @@
   justify-content: center;
   align-items: center;
 }
+
+.icon-index{
+  font-weight: bold;
+  border: 20px solid #5B4746;
+  margin: 0px 25px 0px 25px;
+}
