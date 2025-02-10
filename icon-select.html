@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>アイコン選択</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- ヘッダー：現在のプレイヤー番号や登録完了メッセージを表示 -->
   <div class="barrier">
@@ -19,6 +21,10 @@
     <div class="selected-icons" id="selected-icons">
       <!-- ページ読み込み時にJSで枠が生成される -->
     </div>
+
+    <!-- 「次へ」ボタン（全員選択後に表示される） -->
+    <button class="buttonDesign" id="next">次へ</button>
+
     <!-- アイコン選択グリッド -->
     <div class="icon-grid">
       <button class="icon" id="mouse" onclick="selectIcon('mouse')">
@@ -59,8 +65,8 @@
       </button>
     </div>
   </main>
-  <!-- 「次へ」ボタン（全員選択後に表示される） -->
-  <button class="buttonDesign" id="next">次へ</button>
+
   <script src="icon-select.js"></script>
 </body>
+
 </html>
