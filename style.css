@@ -1,198 +1,210 @@
-  @charset "utf-8";
+@charset "utf-8";
 
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: url(./img/background.png);
-    background-repeat: repeat;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-  }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: url(./img/background.png);
+  background-repeat: repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
 
-  .barrier{
-    border: 5px solid #5B4746;
-    padding: 40px;
-    margin: 40px;
-    width: calc(100vw - 120px);
-    display: inline-block;
-    background-color: #E1D1B7;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    flex-direction: column; /* 縦方向に配置 */
-    align-items: center;
-  }
+.barrier{
+  border: 5px solid #5B4746;
+  padding: 40px;
+  margin: 40px;
+  width: calc(100vw - 120px);
+  background-color: #E1D1B7;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column; /* 縦方向に配置 */
+  align-items: center;
+}
 
-  header {
-    text-align: center;
-    padding-top: 8px;
-  }
+header {
+  text-align: center;
+  padding-top: 8px;
+}
 
-  h1 {
-    margin: 16px 0;
-    font-size: 24px;
-  }
+h1 {
+  margin: 16px 0;
+  font-size: 24px;
+}
 
-  main {
-    padding: 16px 0;
-    text-align: center;
-  }
+main {
+  padding: 16px 0;
+  text-align: center;
+}
 
-  /* アイコンボタンスタイル   */
-  .icon {
-    width: 7rem;
-    height: 7rem;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+/* アイコンボタンスタイル（アイコン選択グリッド用） */
+.icon {
+  width: 112px;  /* 7rem相当（16px × 7 = 112px） */
+  height: 112px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  .icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
-  .icon:hover {
-    border-color: #007bff;
-  }
+.icon:hover {
+  border-color: #007bff;
+}
 
-  .icon.disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
+.icon.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
 
-  .icon.selected {
-    border: 3px solid orange;
-  }
+.icon.selected {
+  border: 3px solid orange;
+}
 
-  /* ボタンのデザインを変えたので、後に削予定　*/
-  /* ボタンのスタイル */
-  /*#next {
-    margin: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: none; /* 初期状態で非表示 
-    background: #28a745;
-    box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
-  }
+/* ボタンのデザイン（参考用コメント済み）
+#next {
+  margin: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: none; 
+  background: #28a745;
+  box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+}
 
-  #next:hover {
-    background: #218838;
-    box-shadow: 0 6px 8px rgba(33, 136, 56, 0.3);
-  }*/
+#next:hover {
+  background: #218838;
+  box-shadow: 0 6px 8px rgba(33, 136, 56, 0.3);
+}
+*/
 
-  button:active {
-    transform: scale(0.95);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
-  /* 選択したアイコンを表示するコンテナ */
-  .selected-icons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-  }
+/* 選択したアイコンを表示するコンテナ */
+/* グリッドレイアウトで1行に最大4個並べ、余白は10px。 */
+.selected-icons {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-items: center;
+}
 
-  .selected-icon {
-    margin: 5px;
-    text-align: center;
-  }
-
-  .selected-icon img {
-    width: 5rem;
-    height: 5rem;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .selected-icon p {
-    margin: 5px 0 0;
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  .playerSelect-button{
-    display: flex;
-    align-items: center;
-    margin: 50px 10px 50px 10px;
-    justify-content: space-evenly;
-  }
-
-  .buttonDesign{
-    display: block;
-    text-decoration: none;
-    width: auto;
-    border-radius: 100vh;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    font-weight: bold;
-    border: 2px solid #BF7F64;
-    color: #000;
-    margin: 0px 25px 0px 25px;
-    cursor: pointer;
-  }
-
-  .buttonDesign:hover {
-    color: #fff;
-    background: #BF7F64;
-  }
-
-  .playerSelect-back{
-    opacity: .5;
-    display: block;
-    text-decoration: none;
-    width: auto;
-    border-radius: 100vh;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    font-weight: bold;
-    border: 2px solid #7F7F7F;
-    color: #000;
-    margin: 0px 25px 0px 25px;
-  }
-  .pulldown{
-    font-size: 30px;
-    padding: 10px 20px 10px 20px;
-    border-width: 3px;
-  }
-
-  .image-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    cursor: pointer;
-  }
-
-/* 各アイコン枠自体は余白等のレイアウト調整に使う */
+/* 各アイコン枠（JS側で .icon-frame クラスとして作成） */
+/* 横幅はグリッドセル内で100%とし、最大幅を 140px に設定 */
 .icon-frame {
   margin: 10px;
-  padding: 5px;
+  padding: 10px;
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
-/* 初期状態の画像は透明な枠を指定 */
 .icon-frame img {
   border: 2px solid transparent;
+  width: 100%;
+  height: auto;
 }
 
-/* .icon-frameにactiveクラスが付いている場合、画像に黒い枠を付ける */
 .icon-frame.active img {
   border: 2px solid black;
   border-radius: 50%;
 }
 
+/* ※ 古い selected-icon 用のスタイル（必要に応じて利用） */
+.selected-icon {
+  margin: 5px;
+  text-align: center;
+}
+
+.selected-icon img {
+  width: 140px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.selected-icon p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.playerSelect-button{
+  display: flex;
+  align-items: center;
+  margin: 50px 10px 50px 10px;
+  justify-content: space-evenly;
+}
+
+.buttonDesign{
+  display: block;
+  text-decoration: none;
+  width: auto;
+  border-radius: 100px;
+  font-size: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: 2px solid #BF7F64;
+  color: #000;
+  margin: 0px 25px;
+  cursor: pointer;
+}
+
+.buttonDesign:hover {
+  color: #fff;
+  background: #BF7F64;
+}
+
+.playerSelect-back{
+  opacity: 0.5;
+  display: block;
+  text-decoration: none;
+  width: auto;
+  border-radius: 100px;
+  font-size: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: 2px solid #7F7F7F;
+  color: #000;
+  margin: 0px 25px;
+}
+
+.pulldown{
+  font-size: 30px;
+  padding: 10px 20px;
+  border-width: 3px;
+}
+
+.image-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  cursor: pointer;
+}
+
+/* .inputAmount とその内部要素 */
 .inputAmount{
   font-size: 30px;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   margin-bottom: 20px;
   border-width: 3px;
 }
@@ -214,5 +226,5 @@
 .icon-index{
   font-weight: bold;
   border: 20px solid #5B4746;
-  margin: 0px 25px 0px 25px;
+  margin: 0px 25px;
 }
