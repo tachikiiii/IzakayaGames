@@ -26,7 +26,10 @@ function handleMotion(event) {
         const deltaZ = Math.abs(z - lastZ);
 
         // シェイク判定（しきい値を超えた場合にカウント）
-        if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
+        // 前のコード
+        // if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
+        const delta = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+        if (delta > threshold) {
             const currentTime = Date.now();
             if (currentTime - lastShakeTime > debounceTime) {
                 shakeCount++;
