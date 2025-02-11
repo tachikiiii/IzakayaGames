@@ -89,7 +89,9 @@ function startGame() {
                     // 次のプレイヤー or 結果表示
                     if (currentPlayerIndex + 1 < players.length) {
                         currentPlayerIndex++;
-                        document.body.innerHTML += `<p>次は、、</p><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さん<button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button></div>`;
+                        // 次のプレイヤーの情報を取得
+                        const nextPlayer = getCurrentPlayer();
+                        document.body.innerHTML += `<p>次は、、</p><img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}">さん<button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button></div>`;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
                         document.body.innerHTML += `<button class="buttonDesign" id="resultPage">結果を見る</button><div>`;
@@ -103,24 +105,35 @@ function startGame() {
 
 // ゲーム結果を表示する（シェイク回数順に並べる）
 function showResults() {
-    players.sort((a, b) => b.shakeCount - a.shakeCount); // シェイク回数の多い順に並べる
+    // シェイク回数の多い順に並べ替え
+    players.sort((a, b) => b.shakeCount - a.shakeCount);
 
-    let resultHTML = `<div class="barrier"><img src="img/lettering-shakecounter.png">`;
-    players.forEach(player => {
+    let resultHTML = `
+        <div class="barrier">
+            <img src="img/lettering-shakecounter.png" alt="Shake Counter">
+            <ul class="result-list">`;
+
+    // プレイヤーごとに順位、画像、シェイク回数を表示（すべて同一行にする）
+    players.forEach((player, index) => {
         resultHTML += `
-            <li style="list-style-type: none;">
-                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:70px; height:70px;">
-                <strong>${player.shakeCount}回</strong>
+            <li>
+                <span class="result-rank">${index + 1}位</span>
+                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" class="result-img">
+                <span class="result-text">${player.shakeCount}回</span>
             </li>
         `;
     });
-    resultHTML += `</div></ul><button class="buttonDesign" id="checkoutPage">お会計へ</button>`;
+
+    resultHTML += `
+            <button class="buttonDesign" id="checkoutPage">お会計へ</button>
+        `;
 
     document.body.innerHTML = resultHTML;
     document.getElementById("checkoutPage").addEventListener("click", () => {
         window.location.href = "checkout.html";
     });
 }
+
 
 // プレイヤーのデータをストレージに保存する
 function updateSessionStorage() {

@@ -16,6 +16,7 @@ body {
   background-color: #E1D1B7;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .container {
@@ -60,7 +61,7 @@ button:hover {
   font-weight: bold;
   border: 2px solid #BF7F64;
   color: #000;
-  margin: 0px 25px 0px 25px;
+  margin: 20px auto;
   cursor: pointer;
 }
 
@@ -72,6 +73,37 @@ button:hover {
 #shakeCount {
   display:block;
   color: red;
-  background: #fff;
+  font-size: 120px;
+}
+
+/* 結果リストの基本設定 */
+.result-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;  /* 横中央に配置 */
+}
+
+/* 各順位項目を横並びで中央揃えにする */
+.result-list li {
+  display: flex;
+  align-items: center;      /* 垂直方向中央揃え */
+  justify-content: center;  /* 横方向中央揃え */
+  gap: 10px;                /* 要素間の間隔 */
+  margin: 10px 0;
+}
+
+/* 順位のスタイル */
+.result-rank {
   font-size: 40px;
+}
+
+/* アイコンのスタイル */
+.result-img {
+  width: 120px;
+  height: 120px;
+}
+
+/* シェイク回数のスタイル */
+.result-text {
+  font-size: 32px;
 }
