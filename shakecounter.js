@@ -109,7 +109,7 @@ function showResults() {
     players.forEach(player => {
         resultHTML += `
             <li style="list-style-type: none;">
-                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:50px; height:50px;">
+                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" style="width:70px; height:70px;">
                 <strong>${player.shakeCount}回</strong>
             </li>
         `;
