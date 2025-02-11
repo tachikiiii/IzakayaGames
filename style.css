@@ -12,7 +12,7 @@ body {
 
 .barrier{
   border: 5px solid #5B4746;
-  padding: 10px;
+  padding: 10px 20px;
   margin-top: 40px;
   width: calc(100vw - 120px);
   background-color: #E1D1B7;
