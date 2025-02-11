@@ -62,6 +62,9 @@ function selectIcon(iconId) {
   
   // すべてのプレイヤー分選択済みの場合
   if (players.length === maxPlayers) {
+
+    document.querySelectorAll(".icon-frame").forEach(frame => frame.classList.remove("active"));
+    
     // ヘッダーを完了メッセージに変更
     //const header = document.querySelector("header h1");
     //header.textContent = "すべてのプレイヤーの登録が完了しました";
