@@ -1,10 +1,10 @@
 
 // 定数の指定
 const urlParams = new URLSearchParams(window.location.search);
-//const amount = urlParams.get('amount');
-//const numPeople=sessionStorage.getItem("playerCount");
-//const players = JSON.parse(sessionStorage.getItem('players'));
-//const mode = sessionStorage.getItem("mode")
+const amount = urlParams.get('amount');
+const numPeople=sessionStorage.getItem("playerCount");
+const players = JSON.parse(sessionStorage.getItem('players'));
+const mode = sessionStorage.getItem("mode")
 
 let finalOutcome = 0
 let finalWinners = 0
@@ -23,22 +23,6 @@ let remainder = 0
 //    { number: "3人目", icon: "horse", game1: 12, game2: 30, game3: 20 },
 //    { number: "4人目", icon: "rabbit", game1: 12, game2: 34, game3: 100 }
 //];
-
-//test
-const amount = 7300
-const mode = "Oni Mode"
-const numPeople=9
-const players = [
-    { number: "1人目", icon: "mouse", shakeCount: 1},
-    { number: "2人目", icon: "rabbit", shakeCount: 1},
-    { number: "3人目", icon: "dragon", shakeCount: 1},
-    { number: "1人目", icon: "mouse", shakeCount: 1},
-    { number: "2人目", icon: "rabbit", shakeCount: 1},
-    { number: "3人目", icon: "dragon", shakeCount: 1},
-    { number: "1人目", icon: "mouse", shakeCount: 1},
-    { number: "2人目", icon: "rabbit", shakeCount: 1},
-    { number: "3人目", icon: "dragon", shakeCount: 1}
-];
 
 // 各ゲームでの記録をまとめる関数（ゲームが複数になった場合の処理）
 function calculateFinalOutcome() {
