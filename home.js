@@ -3,4 +3,4 @@ function redirectToNextPage() {
 }
 
 document.addEventListener('click', redirectToNextPage);
-//setTimeout(redirectToNextPage, 5000);
+setTimeout(redirectToNextPage, 5000);

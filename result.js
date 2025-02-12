@@ -45,7 +45,7 @@ function calculateFinalOutcomeShakeCount() {
     });
 
     // 負けの降順にソート
-    finalOutcome.sort((a, b) => b.lost - a.lost);
+    //finalOutcome.sort((a, b) => b.lost - a.lost);
 }
 
 // それぞれの支払い額を計算する関数
