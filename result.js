@@ -99,12 +99,12 @@ function calculatePayment(amount) {
     
     // 「福モード」の場合
     } else {
-        let tmpShare = amout / numPeople
+        let tmpShare = amount / numPeople
         let lessShare = tmpShare * 0.05
         winnerShare = Math.floor((tmpShare - lessShare) / 10) * 10
 
         loserShare = amount - (winnerShare * winner)
-        loserShare = loserShare / loser
+        loserShare = Math.floor(loserShare / loser)
 
         remainder = amount - (winnerShare * winner) - (loserShare * loser)
     }
@@ -231,6 +231,10 @@ if (amount) {
             calculateFinalOutcomeShakeCount();
             calculatePayment(parseInt(amount));
             showPopup();
+
+            //test
+            console.log("finalWinner:", finalWinners, "finalLoser:", finalLosers)
+            console.log("winnerShare:", winnerShare, "loserShare:", loserShare)
 
         }, 3000); 
     }else{
