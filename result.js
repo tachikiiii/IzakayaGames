@@ -147,19 +147,23 @@ function showPopup(){
         // 負けた人の順位表示
         numElement.textContent = `最下${count}位`;
         numElement.style = "fon-size: 20px"
-        count += 1
 
         // 負けた人のアイコン表示
         loserImageElement.src = `./img/btn_${index.icon}.png`;
 
         // 負けた人の支払い額を表示
-        if (index==0){
-            loserShareElement.textContent = `${loserShare}+${remainder}円`;
+        if (count == 1){
+            const mostLoserShare = loserShare + remainder
+            loserShareElement.textContent = `${mostLoserShare}円`;
+
+            console.log(count-1, "place ", loserShare)
         } else{
             loserShareElement.textContent = `${loserShare}円`;
         }
 
         loserShareElement.style = "fon-size: 20px"        
+
+        count += 1
 
         losersDivEach.appendChild(numElement);
         losersDivEach.appendChild(loserImageElement);
