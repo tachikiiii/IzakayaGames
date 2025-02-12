@@ -132,6 +132,7 @@ function showPopup(){
     resultDiv.innerHTML = ''; 
 
     const losersDiv = document.createElement('div');
+    losersDiv.classList.add("loser");
 
     let count=1
     // 負けたプレイヤーのアイコンと金額をまとめて表示
