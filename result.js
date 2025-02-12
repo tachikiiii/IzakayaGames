@@ -21,7 +21,7 @@ function calculateFinalOutcome() {
     
     // 各ゲームで数値が高いプレイヤーがlostの値が高くなる
     for (let game of ['game1', 'game2', 'game3']) {
-        let maxScore = Math.max(...players.map(player => player[game]));
+        let maxScore = Math.min(...players.map(player => player[game]));
         players.forEach((player, index) => {
             if (player[game] === maxScore) {
                 finalOutcome[index].lost += 1; 
@@ -36,7 +36,7 @@ function calculateFinalOutcome() {
 // 携帯シェイクでの記録をまとめる関数（ゲームが複数になった場合は削除）
 function calculateFinalOutcomeShakeCount() {
     
-    let maxShakeCount = Math.max(...players.map(player => player.shakeCount));
+    let maxShakeCount = Math.min(...players.map(player => player.shakeCount));
 
     players.forEach((player, index) => {
         if (player.shakeCount === maxShakeCount) {
@@ -45,7 +45,7 @@ function calculateFinalOutcomeShakeCount() {
     });
 
     // 負けの降順にソート
-    //finalOutcome.sort((a, b) => b.lost - a.lost);
+    finalOutcome.sort((a, b) => b.lost - a.lost);
 }
 
 // それぞれの支払い額を計算する関数
