@@ -81,7 +81,7 @@ function calculatePayment(amount) {
     const winner = numPeople - loser
 
     // 全員が同一最下位の場合
-    if (winnerShare == 0){
+    if (finalWinners == 0){
         loserShare = Math.floor(amount / numPeople);
         remainder = amount - (loserShare * numPeople);
     
@@ -151,7 +151,6 @@ function showPopup(){
 
         // 負けた人のアイコン表示
         loserImageElement.src = `./img/btn_${index.icon}.png`;
-        //loserImageElement.style = 'width:100px; height:100px;';
 
         // 負けた人の支払い額を表示
         if (index==0){
