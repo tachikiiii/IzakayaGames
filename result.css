@@ -106,10 +106,3 @@ p{
     display: flex;
     flex-direction: row;
 }
-
-.eachLoser img{
-  /*object-fit: cover;*/
-}
-
-.losers {
-}

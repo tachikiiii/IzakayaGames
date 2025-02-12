@@ -1,12 +1,11 @@
 
 // 定数の指定
 const urlParams = new URLSearchParams(window.location.search);
-//const amount = urlParams.get('amount');
-//const numPeople=sessionStorage.getItem("playerCount");
-//const players = JSON.parse(sessionStorage.getItem('players'));
-//const mode = sessionStorage.getItem("mode")
+const amount = urlParams.get('amount');
+const numPeople=sessionStorage.getItem("playerCount");
+const players = JSON.parse(sessionStorage.getItem('players'));
+const mode = sessionStorage.getItem("mode")
 
-//let payments = 0; // 負けた人と負けていない人の支払い額
 let finalOutcome = 0
 let finalWinners = 0
 let finalLosers = 0
@@ -24,19 +23,6 @@ let remainder = 0
 //    { number: "3人目", icon: "horse", game1: 12, game2: 30, game3: 20 },
 //    { number: "4人目", icon: "rabbit", game1: 12, game2: 34, game3: 100 }
 //];
-
-
-//test
-const amount = 3781
-const mode = "Fuku Mode"
-const numPeople=5
-const players = [
-    { number: "1人目", icon: "mouse", shakeCount: 34},
-    { number: "2人目", icon: "rabbit", shakeCount: 1},
-    { number: "3人目", icon: "dragon", shakeCount: 1},
-    { number: "4人目", icon: "horse", shakeCount: 1},
-    { number: "5人目", icon: "cow", shakeCount: 1}
-];
 
 // 各ゲームでの記録をまとめる関数（ゲームが複数になった場合の処理）
 function calculateFinalOutcome() {
@@ -84,9 +70,6 @@ function divideWinnerLoser(){
     .filter(item => item.lost === maxLosses)
     .map(({ lost, ...rest }) => rest);
 
-    //test
-    console.log("finalWinners:", finalWinners)
-    console.log("First finalLosers:", finalLosers)
 }
 
 // それぞれの支払い額を計算する関数
@@ -97,8 +80,13 @@ function calculatePayment(amount) {
     const loser = finalOutcome.filter(player => player.lost === maxLostCount).length;
     const winner = numPeople - loser
 
+    // 全員が同一最下位の場合
+    if (winnerShare == 0){
+        loserShare = Math.floor(amount / numPeople);
+        remainder = amount - (loserShare * numPeople);
+    
     // 「鬼モード」の場合
-    if (mode=="Oni Mode"){
+    }else if (mode=="Oni Mode"){
         winnerShare = (amount / 10) * 2
         winnerShare = winnerShare / winner
         winnerShare = Math.floor(winnerShare / 10) *10   
@@ -106,6 +94,8 @@ function calculatePayment(amount) {
         const winnerTotalShare = winnerShare * winner
         const loserTotalShare = amount - winnerTotalShare
         loserShare = Math.floor(loserTotalShare / loser)
+
+        remainder = amount - (winnerShare * winner) - (loserShare * loser)
     
     // 「福モード」の場合
     } else {
@@ -116,9 +106,10 @@ function calculatePayment(amount) {
         const loserExtraShare = amount - (winnerShare * numPeople)
         const loserExtra = loserExtraShare / loser
         loserShare = Math.floor(winnerShare + loserExtra)
+
+        remainder = amount - (winnerShare * winner) - (loserShare * loser)
     }
 
-    remainder = amount - (winnerShare * winner) - (loserShare * loser)
 }
 
 // 同一最下位がいるかつ、お会計の計算に余りが出ている場合に、その余りを払う人をランダムに選ぶ
@@ -141,12 +132,11 @@ function showPopup(){
     resultDiv.innerHTML = ''; 
 
     const losersDiv = document.createElement('div');
-    losersDiv.classList.add('losers'); //test
 
     let count=1
     // 負けたプレイヤーのアイコンと金額をまとめて表示
     finalLosers.forEach(index => {
-        const losersDivEach = document.createElement('div');
+        const losersDivEach = document.createElement('li');
         losersDivEach.classList.add('eachLoser');
 
         const numElement = document.createElement('span');
@@ -178,34 +168,40 @@ function showPopup(){
         losersDiv.append(losersDivEach)
     })
 
-    const winnerDiv = document.createElement('div');
+    resultDiv.appendChild(losersDiv);
 
-    // 勝ったプレイヤーのアイコンをまとめて表示
-    finalWinners.forEach(index => {
-        const winnerImageElement = document.createElement('img');
-        winnerImageElement.src = `./img/btn_${index.icon}.png`;
-        winnerImageElement.style = 'width:50px; height:50px;';
-        winnerDiv.appendChild(winnerImageElement);
-    })
+    // 全員が負けではないことを確認する
+    if (finalWinners.length != 0){
+        const winnerDiv = document.createElement('div');
 
-    // 勝ったプレイヤーの支払い額を表示
-    const winnerShareDiv = document.createElement('div');
-    const winnerShareElement = document.createElement('span');
-    winnerShareElement.textContent = `${winnerShare}円`;
-    winnerShareDiv.appendChild(winnerShareElement);
+        // 勝ったプレイヤーのアイコンをまとめて表示
+        finalWinners.forEach(index => {
+            const winnerImageElement = document.createElement('img');
+            winnerImageElement.src = `./img/btn_${index.icon}.png`;
+            winnerImageElement.style = 'width:50px; height:50px;';
+            winnerDiv.appendChild(winnerImageElement);
+        })
+
+        // 勝ったプレイヤーの支払い額を表示
+        const winnerShareDiv = document.createElement('div');
+        const winnerShareElement = document.createElement('span');
+        winnerShareElement.textContent = `${winnerShare}円`;
+        winnerShareDiv.appendChild(winnerShareElement);
+
+        resultDiv.appendChild(winnerDiv);
+        resultDiv.appendChild(winnerShareDiv);
+    }
+
 
     // 「最初の画面に戻る」ボタン
     const button = document.createElement('button');
-    button.textContent = '最初の画面に戻る'; 
+    button.textContent = '最初からやり直す'; 
     button.classList.add('buttonDesign'); 
     button.style.marginTop = '10px'; 
     button.onclick = function() {
         window.location.href = 'mode-select.html'; 
     };
 
-    resultDiv.appendChild(losersDiv);
-    resultDiv.appendChild(winnerDiv);
-    resultDiv.appendChild(winnerShareDiv);
     resultDiv.appendChild(button);
 }
 
@@ -233,7 +229,6 @@ if (amount) {
             calculatePayment(parseInt(amount));
             showPopup();
 
-
         }, 3000); 
     }else{
         document.getElementById('loadingMessage').textContent = 'No mode selected.';
@@ -244,8 +239,10 @@ if (amount) {
 }
 
 // 「x」ボタンを選択されるとポップアップ画面が消える
+// 一旦コメントアウト
+/*
 document.getElementById('closeButton').addEventListener('click', function() {
     document.getElementById('popupBackground').style.display = 'none';
     document.getElementById('popup').style.display = 'none';
 });
-
+*/

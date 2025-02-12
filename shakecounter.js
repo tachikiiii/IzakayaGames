@@ -61,7 +61,7 @@ function startGame() {
             document.body.innerHTML = `
                 <div class="barrier">
                 <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
-                <p>スマホを振ってください！</p>
+                <p>赤い０が表示されたら<br>スマホを振り始めて！</p>
                 <h2>${countdown}</h2>
                 </div>
             `;
@@ -71,7 +71,7 @@ function startGame() {
                 document.body.innerHTML = `
                     <div class="barrier">
                     <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
-                    <p>スマホを振ってください！</p>
+                    <p>スマホを振って！</p>
                     <p>振った回数: <span id="shakeCount">0</span></p>
                     </div>
                 `;
@@ -176,6 +176,7 @@ function showGame() {
     document.body.innerHTML = `
         <div class="barrier">
         <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">さんのチャレンジ！</h1>
+        <p>スマホを10秒間<br>振り続けてね</p>
         </div>
         <button class="buttonDesign" id="startButton">スタート</button>
     `;
