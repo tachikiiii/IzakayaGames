@@ -231,3 +231,7 @@ button:active {
   border: 20px solid #5B4746;
   margin: 0px 25px;
 }
+
+.icon-title{
+  margin: 20px 0px; 
+}
