@@ -109,6 +109,12 @@ p{
     flex-direction: row;
 }
 
+.loser {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+}
+
 .loser li{
     display: flex;
     align-items: center;

@@ -1,10 +1,10 @@
 
 // 定数の指定
 const urlParams = new URLSearchParams(window.location.search);
-const amount = urlParams.get('amount');
-const numPeople=sessionStorage.getItem("playerCount");
-const players = JSON.parse(sessionStorage.getItem('players'));
-const mode = sessionStorage.getItem("mode")
+//const amount = urlParams.get('amount');
+//const numPeople=sessionStorage.getItem("playerCount");
+//const players = JSON.parse(sessionStorage.getItem('players'));
+//const mode = sessionStorage.getItem("mode")
 
 let finalOutcome = 0
 let finalWinners = 0
@@ -23,6 +23,22 @@ let remainder = 0
 //    { number: "3人目", icon: "horse", game1: 12, game2: 30, game3: 20 },
 //    { number: "4人目", icon: "rabbit", game1: 12, game2: 34, game3: 100 }
 //];
+
+//test
+const amount = 7300
+const mode = "Oni Mode"
+const numPeople=9
+const players = [
+    { number: "1人目", icon: "mouse", shakeCount: 1},
+    { number: "2人目", icon: "rabbit", shakeCount: 1},
+    { number: "3人目", icon: "dragon", shakeCount: 1},
+    { number: "1人目", icon: "mouse", shakeCount: 1},
+    { number: "2人目", icon: "rabbit", shakeCount: 1},
+    { number: "3人目", icon: "dragon", shakeCount: 1},
+    { number: "1人目", icon: "mouse", shakeCount: 1},
+    { number: "2人目", icon: "rabbit", shakeCount: 1},
+    { number: "3人目", icon: "dragon", shakeCount: 1}
+];
 
 // 各ゲームでの記録をまとめる関数（ゲームが複数になった場合の処理）
 function calculateFinalOutcome() {
@@ -87,7 +103,7 @@ function calculatePayment(amount) {
     
     // 「鬼モード」の場合
     }else if (mode=="Oni Mode"){
-        winnerShare = (amount / 10) * 2
+        winnerShare = amount * 0.2
         winnerShare = winnerShare / winner
         winnerShare = Math.floor(winnerShare / 10) *10   
     
@@ -99,13 +115,12 @@ function calculatePayment(amount) {
     
     // 「福モード」の場合
     } else {
-        winnerShare = Math.floor(amount / 10)
-        winnerShare = Math.floor(winnerShare / numPeople)
-        winnerShare = winnerShare * 10
-        
-        const loserExtraShare = amount - (winnerShare * numPeople)
-        const loserExtra = loserExtraShare / loser
-        loserShare = Math.floor(winnerShare + loserExtra)
+        let tmpShare = amout / numPeople
+        let lessShare = tmpShare * 0.05
+        winnerShare = Math.floor((tmpShare - lessShare) / 10) * 10
+
+        loserShare = amount - (winnerShare * winner)
+        loserShare = loserShare / loser
 
         remainder = amount - (winnerShare * winner) - (loserShare * loser)
     }
