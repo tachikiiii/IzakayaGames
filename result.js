@@ -1,12 +1,20 @@
 
 // 定数の指定
 const urlParams = new URLSearchParams(window.location.search);
-const amount = urlParams.get('amount');
-const numPeople=sessionStorage.getItem("playerCount");
-const players = JSON.parse(sessionStorage.getItem('players'));
-const mode = sessionStorage.getItem("mode")
+//const amount = urlParams.get('amount');
+//const numPeople=sessionStorage.getItem("playerCount");
+//const players = JSON.parse(sessionStorage.getItem('players'));
+//const mode = sessionStorage.getItem("mode")
 
-let finalOutcome =0
+//let payments = 0; // 負けた人と負けていない人の支払い額
+let finalOutcome = 0
+let finalWinners = 0
+let finalLosers = 0
+
+// お会計の計算に使う変数
+let winnerShare = 0
+let loserShare = 0
+let remainder = 0
 
 
 // playersの配列の例
@@ -16,6 +24,20 @@ let finalOutcome =0
 //    { number: "3人目", icon: "horse", game1: 12, game2: 30, game3: 20 },
 //    { number: "4人目", icon: "rabbit", game1: 12, game2: 34, game3: 100 }
 //];
+
+
+//test
+const amount = 3781
+const mode = "Fuku Mode"
+const numPeople=5
+const players = [
+    { number: "1人目", icon: "mouse", shakeCount: 34},
+    { number: "2人目", icon: "rabbit", shakeCount: 1},
+    { number: "3人目", icon: "dragon", shakeCount: 1},
+    { number: "4人目", icon: "horse", shakeCount: 1},
+    { number: "5人目", icon: "cow", shakeCount: 1}
+];
+
 // 各ゲームでの記録をまとめる関数（ゲームが複数になった場合の処理）
 function calculateFinalOutcome() {
     
@@ -46,86 +68,131 @@ function calculateFinalOutcomeShakeCount() {
 
     // 負けの降順にソート
     finalOutcome.sort((a, b) => b.lost - a.lost);
+
+    divideWinnerLoser()
+}
+
+// finalOutcomeを負けたプレイヤーと勝ったプレイヤーで分ける
+function divideWinnerLoser(){
+    const maxLosses = Math.max(...finalOutcome.map(item => item.lost));
+
+    finalWinners = finalOutcome
+    .filter(item => item.lost !== maxLosses)
+    .map(({ lost, ...rest }) => rest);
+  
+    finalLosers = finalOutcome
+    .filter(item => item.lost === maxLosses)
+    .map(({ lost, ...rest }) => rest);
+
+    //test
+    console.log("finalWinners:", finalWinners)
+    console.log("First finalLosers:", finalLosers)
 }
 
 // それぞれの支払い額を計算する関数
 function calculatePayment(amount) {
-    
-    let paymentPerPerson=0
 
+    // 負けたプレイヤーの数を取得し、それぞれの支払い額を計算する
+    const maxLostCount = Math.max(...finalOutcome.map(player => player.lost));
+    const loser = finalOutcome.filter(player => player.lost === maxLostCount).length;
+    const winner = numPeople - loser
+
+    // 「鬼モード」の場合
     if (mode=="Oni Mode"){
-        paymentPerPerson = Math.floor(amount / numPeople / 1000) * 1000;
-    }else{
-        paymentPerPerson = Math.floor(amount / numPeople / 100) * 100;
-    }
+        winnerShare = (amount / 10) * 2
+        winnerShare = winnerShare / winner
+        winnerShare = Math.floor(winnerShare / 10) *10   
     
-    const remainingAmount = amount - (paymentPerPerson * (numPeople - 1));
-
-    // 負けた人が払う額
-    let payments = [];
-    payments.push(remainingAmount);
-
-    // 残りの人は均等に支払う金額
-    for (let i = 1; i < numPeople; i++) {
-        payments.push(paymentPerPerson);
+        const winnerTotalShare = winnerShare * winner
+        const loserTotalShare = amount - winnerTotalShare
+        loserShare = Math.floor(loserTotalShare / loser)
+    
+    // 「福モード」の場合
+    } else {
+        winnerShare = Math.floor(amount / 10)
+        winnerShare = Math.floor(winnerShare / numPeople)
+        winnerShare = winnerShare * 10
+        
+        const loserExtraShare = amount - (winnerShare * numPeople)
+        const loserExtra = loserExtraShare / loser
+        loserShare = Math.floor(winnerShare + loserExtra)
     }
 
-    // 負けた人が最初に表示されるように降順の並べ替え
-    payments.sort((a, b) => b - a);
-
-    // 支払額をfinalOutcomeに追加する
-    finalOutcome.forEach((player, index) => {
-        player.payment = payments[index];
-    });
+    remainder = amount - (winnerShare * winner) - (loserShare * loser)
 }
 
+// 同一最下位がいるかつ、お会計の計算に余りが出ている場合に、その余りを払う人をランダムに選ぶ
+function shuffleLosers(){
+    for (let i = finalLosers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [finalLosers[i], finalLosers[j]] = [finalLosers[j], finalLosers[i]];
+      }
+}
 
 // 結果を表示
 function showPopup(){
-    
+
+    // 余りを払う人をランダムに選ぶ
+    if (finalLosers.length != 1 && remainder != 0){
+        shuffleLosers();
+    }
+
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = ''; 
 
-    // 負けた人のアイコンと支払額を先に表示する
-    const firstPlayer = finalOutcome[0];
-    
-    const firstImgDiv = document.createElement('div');
-    const firstImgElement = document.createElement('img');
-    firstImgElement.src = `./img/btn_${firstPlayer.icon}.png`; 
-    firstImgElement.alt = `btn_image_0`;
-    firstImgElement.style = 'width:200px; height:200px;';
+    const losersDiv = document.createElement('div');
+    losersDiv.classList.add('losers'); //test
 
-    firstImgDiv.appendChild(firstImgElement)
-    resultDiv.appendChild(firstImgDiv);
+    let count=1
+    // 負けたプレイヤーのアイコンと金額をまとめて表示
+    finalLosers.forEach(index => {
+        const losersDivEach = document.createElement('div');
+        losersDivEach.classList.add('eachLoser');
 
-    const firstAmountSpan = document.createElement('span');
-    firstAmountSpan.textContent = `${firstPlayer.payment} 円`;
-    firstAmountSpan.style.fontSize = '30px';
-    firstAmountSpan.style.marginBottom = '20px';
-    
-    resultDiv.appendChild(firstAmountSpan);
+        const numElement = document.createElement('span');
+        const loserImageElement = document.createElement('img');
+        const loserShareElement = document.createElement('span');
 
-    // 負けた人以外のアイコンを表示
-    const personDiv = document.createElement('div');
-    personDiv.classList.add('elsePlayer-icon');
+        // 負けた人の順位表示
+        numElement.textContent = `最下${count}位`;
+        numElement.style = "fon-size: 20px"
+        count += 1
 
-    finalOutcome.slice(1).forEach((player, index) => {
+        // 負けた人のアイコン表示
+        loserImageElement.src = `./img/btn_${index.icon}.png`;
+        //loserImageElement.style = 'width:100px; height:100px;';
 
-        const imgElement = document.createElement('img');
-        imgElement.src = `./img/btn_${player.icon}.png`; 
-        imgElement.alt = `btn_image_${index+1}`;
-        imgElement.style = 'width:50px; height:50px;';
+        // 負けた人の支払い額を表示
+        if (index==0){
+            loserShareElement.textContent = `${loserShare}+${remainder}円`;
+        } else{
+            loserShareElement.textContent = `${loserShare}円`;
+        }
 
-        personDiv.appendChild(imgElement);
-    });
-    resultDiv.appendChild(personDiv);
+        loserShareElement.style = "fon-size: 20px"        
 
-    // 負けた人以外の金額を表示
-    const elsePlayer = finalOutcome[1];
-    const amountSpan = document.createElement('span');
-    amountSpan.textContent = `${elsePlayer.payment} 円`;
+        losersDivEach.appendChild(numElement);
+        losersDivEach.appendChild(loserImageElement);
+        losersDivEach.appendChild(loserShareElement);
 
-    resultDiv.appendChild(amountSpan);
+        losersDiv.append(losersDivEach)
+    })
+
+    const winnerDiv = document.createElement('div');
+
+    // 勝ったプレイヤーのアイコンをまとめて表示
+    finalWinners.forEach(index => {
+        const winnerImageElement = document.createElement('img');
+        winnerImageElement.src = `./img/btn_${index.icon}.png`;
+        winnerImageElement.style = 'width:50px; height:50px;';
+        winnerDiv.appendChild(winnerImageElement);
+    })
+
+    // 勝ったプレイヤーの支払い額を表示
+    const winnerShareDiv = document.createElement('div');
+    const winnerShareElement = document.createElement('span');
+    winnerShareElement.textContent = `${winnerShare}円`;
+    winnerShareDiv.appendChild(winnerShareElement);
 
     // 「最初の画面に戻る」ボタン
     const button = document.createElement('button');
@@ -136,6 +203,9 @@ function showPopup(){
         window.location.href = 'mode-select.html'; 
     };
 
+    resultDiv.appendChild(losersDiv);
+    resultDiv.appendChild(winnerDiv);
+    resultDiv.appendChild(winnerShareDiv);
     resultDiv.appendChild(button);
 }
 
@@ -156,10 +226,13 @@ if (amount) {
                 icon: player.icon,
                 lost: 0
             }));
+
             //calculateFinalOutcome(); //ゲームが複数になった場合にコメントアウトを外す
+            
             calculateFinalOutcomeShakeCount();
             calculatePayment(parseInt(amount));
             showPopup();
+
 
         }, 3000); 
     }else{
