@@ -112,3 +112,8 @@ button:hover {
 .result-text {
   font-size: 32px;
 }
+
+#signal {
+  font-size: 120px;
+  margin: 0;
+}
