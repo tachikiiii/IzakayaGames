@@ -95,7 +95,7 @@ function startGame() {
                         currentPlayerIndex++;
                         // 次のプレイヤーの情報を取得
                         const nextPlayer = getCurrentPlayer();
-                        document.body.innerHTML += `<p>次は、、</p><img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}">さん<button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button></div>`;
+                        document.body.innerHTML += `<p>次は、、</p><img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}"><button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button></div>`;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
                         document.body.innerHTML += `<button class="buttonDesign" id="resultPage">結果を見る</button><div>`;
