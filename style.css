@@ -103,12 +103,27 @@ button:active {
 /* グリッドレイアウトで1行に最大4個並べ、余白は10px。 */
 .selected-icons {
   margin-top: 20px;
+  width: 100%;                     /* barrier内いっぱいに広げる */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
-  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0px;                        /* 不要な隙間を削除 */
+  justify-items: center;           /* 各グリッドセル内で中央揃え */
+  align-items: center;
+}
+
+.selected-icon {
+  width: 100%;                     /* グリッドセルいっぱいに拡大 */
   box-sizing: border-box;
-  justify-items: center;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+.selected-icon img {
+  width: 100%;                     /* 画像をコンテナに合わせる */
+  height: auto;
+  display: block;
+  margin: 0px;
 }
 
 /* 各アイコン枠（JS側で .icon-frame クラスとして作成） */
@@ -116,8 +131,7 @@ button:active {
 .icon-frame {
   margin: 2px;
   padding: 2px;
-  width: 100%;
-  max-width: 200px;
+  width: 100px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -133,12 +147,6 @@ button:active {
   border-radius: 50%;
 }
 
-.selected-icon img {
-  width: 140px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
 
 .selected-icon p {
   margin: 5px 0 0;

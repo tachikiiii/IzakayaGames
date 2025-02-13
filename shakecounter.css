@@ -31,6 +31,11 @@ h1 {
   color: #006064;
 }
 
+h2 {
+  margin: 0;
+  font-size: 180px;
+}
+
 p {
   font-size: 24px;
   color: #004d40;
@@ -73,7 +78,7 @@ button:hover {
 #shakeCount {
   display:block;
   color: red;
-  font-size: 120px;
+  font-size: 180px;
 }
 
 /* 結果リストの基本設定 */

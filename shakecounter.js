@@ -1,6 +1,6 @@
 let shakeCount = 0;
 let lastX = null, lastY = null, lastZ = null;
-const threshold = 3; // 値が大きいほどシェイクの感度が鈍る
+const threshold = 10; // 値が大きいほどシェイクの感度が鈍る
 const debounceTime = 200; // 連続カウントを防ぐ時間（ミリ秒）
 let lastShakeTime = 0;
 let gameTimer = null;
