@@ -172,8 +172,8 @@ main {
 }
 
 #next {
-  display: none;
-  margin: 0;
+  display: block;
+  margin: 20px auto;
 }
 
 .buttonDesign:hover {
