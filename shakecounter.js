@@ -60,7 +60,7 @@ function startGame() {
         if (countdown > 0) {
             document.body.innerHTML = `
                 <div class="barrier">
-                <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">のチャレンジ！</h1>
+                <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の<br>チャレンジ！</h1>
                 <p>赤い０が表示されたら<br>スマホを振り始めて！</p>
                 <h2>${countdown}</h2>
                 </div>
@@ -176,7 +176,7 @@ function showGame() {
     const player = getCurrentPlayer(); // 現在のプレイヤー情報を取得
     document.body.innerHTML = `
         <div class="barrier">
-        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">のチャレンジ！</h1>
+        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の<br>チャレンジ！</h1>
         <p>スマホを10秒間<br>振り続けてね</p>
         </div>
         <button class="buttonDesign" id="startButton">スタート</button>

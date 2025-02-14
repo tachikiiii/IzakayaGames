@@ -10,7 +10,7 @@ body {
   align-items: center; 
 }
 
-.barrier{
+.barrier {
   border: 5px solid #5B4746;
   padding: 40px;
   margin: 40px;
@@ -20,7 +20,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  flex-direction: column; /* 縦方向に配置 */
+  flex-direction: column;
   align-items: center;
 }
 
@@ -41,8 +41,8 @@ main {
 
 /* アイコンボタンスタイル（アイコン選択グリッド用） */
 .icon {
-  width: 140px;
-  height: 140px;
+  width: 110px;
+  height: 110px;
   border: 2px solid #ccc;
   border-radius: 50%;
   overflow: hidden;
@@ -69,8 +69,33 @@ main {
   border: 3px solid orange;
 }
 
+/* アイコン選択グリッドのレイアウト */
 .icon-grid {
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  max-width: 360px; /* スマホで3列に揃える */
+}
+
+/* 画面サイズによる調整 */
+@media (min-width: 480px) {
+  .icon-grid {
+    grid-template-columns: repeat(3, 110px); /* スマホは3列固定 */
+  }
+}
+
+@media (min-width: 768px) {
+  .icon-grid {
+    grid-template-columns: repeat(4, 120px); /* タブレットでは4列 */
+  }
+}
+
+@media (min-width: 1024px) {
+  .icon-grid {
+    grid-template-columns: repeat(4, 140px); /* PCでは余裕があれば大きめに */
+  }
 }
 
 /* 選択したアイコンを表示するコンテナ */
@@ -128,14 +153,14 @@ main {
   color: #333;
 }
 
-.playerSelect-button{
+.playerSelect-button {
   display: flex;
   align-items: center;
   margin: 50px 10px 50px 10px;
   justify-content: space-evenly;
 }
 
-.buttonDesign{
+.buttonDesign {
   display: block;
   text-decoration: none;
   width: auto;
@@ -159,7 +184,7 @@ main {
   background: #BF7F64;
 }
 
-.playerSelect-back{
+.playerSelect-back {
   opacity: 0.5;
   display: block;
   text-decoration: none;
@@ -173,21 +198,21 @@ main {
   margin: 0px 25px;
 }
 
-.pulldown{
+.pulldown {
   font-size: 30px;
   padding: 10px 20px;
   border-width: 3px;
 }
 
-.image-container{
+.image-container {
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   cursor: pointer;
 }
 
 /* .inputAmount とその内部要素 */
-.inputAmount{
+.inputAmount {
   font-size: 30px;
   padding: 10px 20px;
   margin-bottom: 20px;
@@ -198,7 +223,7 @@ main {
   font-size: 20px;
 }
 
-.image-container{
+.image-container {
   padding: 20px;
   margin: 20px;
   width: calc(100vw - 120px);
@@ -208,12 +233,12 @@ main {
   align-items: center;
 }
 
-.icon-index{
+.icon-index {
   font-weight: bold;
   border: 20px solid #5B4746;
   margin: 0px 25px;
 }
 
-.icon-title{
-  margin: 20px 0px; 
+.icon-title {
+  margin: 20px 0px;
 }
