@@ -77,56 +77,57 @@ main {
   gap: 10px;
   justify-content: center;
   align-items: center;
-  max-width: 360px; /* スマホで3列に揃える */
+  max-width: 360px;
 }
 
 /* 画面サイズによる調整 */
 @media (min-width: 480px) {
   .icon-grid {
-    grid-template-columns: repeat(3, 110px); /* スマホは3列固定 */
+    grid-template-columns: repeat(3, 110px);
   }
 }
 
 @media (min-width: 768px) {
   .icon-grid {
-    grid-template-columns: repeat(4, 120px); /* タブレットでは4列 */
+    grid-template-columns: repeat(4, 120px);
   }
 }
 
 @media (min-width: 1024px) {
   .icon-grid {
-    grid-template-columns: repeat(4, 140px); /* PCでは余裕があれば大きめに */
+    grid-template-columns: repeat(4, 140px);
   }
 }
 
-/* 選択したアイコンを表示するコンテナ（barrier 内に収める） */
+/* selected-icons のレイアウト（barrier 内に収める） */
 .selected-icons {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* はみ出さないように調整 */
-  gap: 5px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
-  width: 100%; /* barrier の幅内に収める */
+  width: 100%;
   max-width: 100%;
+  padding: 10px;
 }
 
-/* 1人・2人の時はそのままのサイズ */
+/* 1人の時は中央配置 */
+.selected-icons:has(.icon-frame:nth-child(1)):has(.icon-frame:nth-child(2):nth-last-child(0)) {
+  grid-template-columns: repeat(1, 140px);
+  justify-content: center;
+}
+
+/* 2人の時はそのまま */
 .selected-icons:has(.icon-frame:nth-child(1)):has(.icon-frame:nth-child(2):nth-last-child(1)) {
   grid-template-columns: repeat(2, 140px);
 }
-.selected-icons:has(.icon-frame:nth-child(1)):has(.icon-frame:nth-child(2):nth-last-child(0)) {
-  grid-template-columns: repeat(1, 140px);
-}
 
-/* 3人なら横3列で縮小 */
+/* 3人なら横3列（アイコン縮小） */
 .selected-icons:has(.icon-frame:nth-child(3):nth-last-child(1)) {
-  grid-template-columns: repeat(3, 110px);
+  grid-template-columns: repeat(3, 100px);
 }
 
-/* 4人以上なら最大4列 */
-.selected-icons:has(.icon-frame:nth-child(4):nth-last-child(1)) {
-  grid-template-columns: repeat(4, 100px);
-}
+/* 4人以上なら最大4列（さらに縮小） */
+.selected-icons:has(.icon-frame:nth-child(4):nth-last-child(1)),
 .selected-icons:has(.icon-frame:nth-child(5)):has(.icon-frame:nth-child(n+5)) {
   grid-template-columns: repeat(4, 90px);
 }
@@ -136,7 +137,7 @@ main {
   margin: 2px;
   padding: 2px;
   width: 100%;
-  max-width: 90px; /* 大きくなりすぎないように制限 */
+  max-width: 120px;
   box-sizing: border-box;
   text-align: center;
 }
