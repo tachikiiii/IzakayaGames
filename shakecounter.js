@@ -78,30 +78,44 @@ function startGame() {
 
                 enableMotion();
 
+                // ゲーム終了時の処理
+                // ゲーム終了時の処理
                 gameTimer = setTimeout(() => {
-                    // ゲーム終了時の処理
                     window.removeEventListener("devicemotion", handleMotion);
                     player.shakeCount = shakeCount;
                     updateSessionStorage();
 
-                    document.body.innerHTML = `
-                        <div class="barrier">
-                        <p id="signal">終了</p>
-                        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の結果<br> ${shakeCount} 回</h1>
-                    `;
+                    // 結果表示（barrier の中に次のプレイヤー表示も含める）
+                    let html = `
+        <div class="barrier">
+            <p id="signal">終了</p>
+            <div class="result-container">
+                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" class="result-icon">
+                <p class="result-text">${player.shakeCount} 回</p>
+            </div>
+    `;
 
                     // 次のプレイヤー or 結果表示
                     if (currentPlayerIndex + 1 < players.length) {
                         currentPlayerIndex++;
-                        // 次のプレイヤーの情報を取得
                         const nextPlayer = getCurrentPlayer();
-                        document.body.innerHTML += `<p>次は、、</p><img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}"><button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button></div>`;
+                        html += `
+            <div class="next-player">
+                <p>次は、、</p>
+                <img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}" class="next-icon">
+                <button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button>
+            </div>
+        </div>`; // ← ここで `barrier` を閉じる
+
+                        document.body.innerHTML = html;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
                     } else {
-                        document.body.innerHTML += `<button class="buttonDesign" id="resultPage">結果を見る</button><div>`;
+                        html += `<button class="buttonDesign" id="resultPage">結果を見る</button></div>`; // ← `barrier` 内に配置
+                        document.body.innerHTML = html;
                         document.getElementById("resultPage").addEventListener("click", showResults);
                     }
                 }, 10000);
+
             }, 100);
         }
     }, 1000);

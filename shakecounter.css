@@ -8,7 +8,7 @@ body {
   align-items: center; 
 }
 
-.barrier{
+.barrier {
   border: 5px solid #5B4746;
   margin: 20px 0px 20px 0px;
   padding: 40px;
@@ -41,28 +41,14 @@ p {
   color: #004d40;
 }
 
-/* ボタンのデザインを変えたので、後に削除予定 */
-/*button {
-  padding: 10px 20px;
-  margin-top: 20px;
-  background-color: #00796b;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #004d40;
-}*/
-
-.buttonDesign{
+/* ボタンデザイン */
+.buttonDesign {
   display: block;
   text-decoration: none;
   width: auto;
   border-radius: 100vh;
   font-size: 20px;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   font-weight: bold;
   border: 2px solid #BF7F64;
   color: #000;
@@ -75,25 +61,25 @@ button:hover {
   background: #BF7F64;
 }
 
+/* シェイクカウント表示 */
 #shakeCount {
-  display:block;
+  display: block;
   color: red;
   font-size: 180px;
 }
 
-/* 結果リストの基本設定 */
+/* 結果リスト */
 .result-list {
   list-style: none;
   padding: 0;
-  margin: 20px auto;  /* 横中央に配置 */
+  margin: 20px auto;  
 }
 
-/* 各順位項目を横並びで中央揃えにする */
 .result-list li {
   display: flex;
-  align-items: center;      /* 垂直方向中央揃え */
-  justify-content: center;  /* 横方向中央揃え */
-  gap: 10px;                /* 要素間の間隔 */
+  align-items: center;    
+  justify-content: center;  
+  gap: 10px;              
   margin: 10px 0;
 }
 
@@ -113,7 +99,49 @@ button:hover {
   font-size: 32px;
 }
 
+/* 終了時の「終了」表示 */
 #signal {
   font-size: 120px;
   margin: 0;
+  font-weight: bold;
+}
+
+/* 結果のデザインを改良 */
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.result-icon {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 10px;
+}
+
+.result-text {
+  font-size: 36px;
+  font-weight: bold;
+  color: #BF7F64;
+}
+
+/* 次のプレイヤー表示 */
+.next-player {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #5B4746;
+  text-align: center;
+}
+
+.next-player p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.next-icon {
+  width: 100px;
+  height: 100px;
+  margin: 10px 0;
 }
