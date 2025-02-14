@@ -102,12 +102,13 @@ main {
 /* selected-icons のレイアウト（barrier 内に収める） */
 .selected-icons {
   display: grid;
-  gap: 10px;
+  gap: 2px;
   justify-content: center;
   align-items: center;
   width: 100%;
   max-width: 100%;
-  padding: 10px;
+  padding: 0;
+  margin: 0;
 }
 
 /* 1人の時は中央配置 */
@@ -129,15 +130,15 @@ main {
 /* 4人以上なら最大4列（さらに縮小） */
 .selected-icons:has(.icon-frame:nth-child(4):nth-last-child(1)),
 .selected-icons:has(.icon-frame:nth-child(5)):has(.icon-frame:nth-child(n+5)) {
-  grid-template-columns: repeat(4, 90px);
+  grid-template-columns: repeat(4, 70px);
 }
 
 /* 各アイコン枠（サイズ調整） */
 .icon-frame {
-  margin: 2px;
-  padding: 2px;
-  width: 100%;
-  max-width: 120px;
+  margin: 0;
+  padding: 0;
+  width: 70px;
+  max-width: 100px;
   box-sizing: border-box;
   text-align: center;
 }
