@@ -73,61 +73,36 @@ main {
   margin-top: 20px;
 }
 
-/* ボタンのデザイン（参考用コメント済み）
-#next {
-  margin: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: none; 
-  background: #28a745;
-  box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
-}
-
-#next:hover {
-  background: #218838;
-  box-shadow: 0 6px 8px rgba(33, 136, 56, 0.3);
-}
-*/
-
-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
 /* 選択したアイコンを表示するコンテナ */
-/* グリッドレイアウトで1行に最大4個並べ、余白は10px。 */
 .selected-icons {
-  margin-top: 20px;
-  width: 100%;                     /* barrier内いっぱいに広げる */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0px;                        /* 不要な隙間を削除 */
-  justify-items: center;           /* 各グリッドセル内で中央揃え */
+  gap: 10px;
+  justify-content: center;
   align-items: center;
 }
 
-.selected-icon {
-  width: 100%;                     /* グリッドセルいっぱいに拡大 */
-  box-sizing: border-box;
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
+/* 1人・2人の場合は中央配置 */
+.selected-icons:has(.icon-frame:nth-child(1)):has(.icon-frame:nth-child(2):nth-last-child(1)) {
+  grid-template-columns: repeat(2, 140px);
+}
+.selected-icons:has(.icon-frame:nth-child(1)):has(.icon-frame:nth-child(2):nth-last-child(0)) {
+  grid-template-columns: repeat(1, 140px);
 }
 
-.selected-icon img {
-  width: 100%;                     /* 画像をコンテナに合わせる */
-  height: auto;
-  display: block;
-  margin: 0px;
+/* 3人なら横3列 */
+.selected-icons:has(.icon-frame:nth-child(3):nth-last-child(1)) {
+  grid-template-columns: repeat(3, 120px);
+}
+
+/* 4人以上なら最大4列で折り返し */
+.selected-icons:has(.icon-frame:nth-child(4):nth-last-child(1)) {
+  grid-template-columns: repeat(4, 100px);
+}
+.selected-icons:has(.icon-frame:nth-child(5)):has(.icon-frame:nth-child(n+5)) {
+  grid-template-columns: repeat(4, 100px);
 }
 
 /* 各アイコン枠（JS側で .icon-frame クラスとして作成） */
-/* 横幅はグリッドセル内で100%とし、最大幅を 140px に設定 */
 .icon-frame {
   margin: 2px;
   padding: 2px;
@@ -146,7 +121,6 @@ button:active {
   border: 2px solid black;
   border-radius: 50%;
 }
-
 
 .selected-icon p {
   margin: 5px 0 0;
