@@ -22,6 +22,7 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  overflow: hidden; /* はみ出し防止 */
 }
 
 header {
@@ -98,15 +99,19 @@ main {
   }
 }
 
-/* 選択したアイコンを表示するコンテナ */
+/* 選択したアイコンを表示するコンテナ（barrier 内に収める） */
 .selected-icons {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* はみ出さないように調整 */
   gap: 10px;
   justify-content: center;
   align-items: center;
+  width: 100%; /* barrier の幅内に収める */
+  max-width: 100%;
+  padding: 10px;
 }
 
-/* 1人・2人の場合は中央配置 */
+/* 1人・2人の時はそのままのサイズ */
 .selected-icons:has(.icon-frame:nth-child(1)):has(.icon-frame:nth-child(2):nth-last-child(1)) {
   grid-template-columns: repeat(2, 140px);
 }
@@ -114,52 +119,43 @@ main {
   grid-template-columns: repeat(1, 140px);
 }
 
-/* 3人なら横3列 */
+/* 3人なら横3列で縮小 */
 .selected-icons:has(.icon-frame:nth-child(3):nth-last-child(1)) {
-  grid-template-columns: repeat(3, 120px);
+  grid-template-columns: repeat(3, 110px);
 }
 
-/* 4人以上なら最大4列で折り返し */
+/* 4人以上なら最大4列 */
 .selected-icons:has(.icon-frame:nth-child(4):nth-last-child(1)) {
   grid-template-columns: repeat(4, 100px);
 }
 .selected-icons:has(.icon-frame:nth-child(5)):has(.icon-frame:nth-child(n+5)) {
-  grid-template-columns: repeat(4, 100px);
+  grid-template-columns: repeat(4, 90px);
 }
 
-/* 各アイコン枠（JS側で .icon-frame クラスとして作成） */
+/* 各アイコン枠（サイズ調整） */
 .icon-frame {
   margin: 2px;
   padding: 2px;
-  width: 100px;
+  width: 100%;
+  max-width: 120px; /* 大きくなりすぎないように制限 */
   box-sizing: border-box;
   text-align: center;
 }
 
+/* アイコン画像 */
 .icon-frame img {
-  border: 2px solid transparent;
   width: 100%;
   height: auto;
+  border: 2px solid transparent;
 }
 
+/* active クラスのスタイル */
 .icon-frame.active img {
   border: 2px solid black;
   border-radius: 50%;
 }
 
-.selected-icon p {
-  margin: 5px 0 0;
-  font-size: 14px;
-  color: #333;
-}
-
-.playerSelect-button {
-  display: flex;
-  align-items: center;
-  margin: 50px 10px 50px 10px;
-  justify-content: space-evenly;
-}
-
+/* ボタンデザイン */
 .buttonDesign {
   display: block;
   text-decoration: none;
@@ -170,7 +166,7 @@ main {
   font-weight: bold;
   border: 2px solid #BF7F64;
   color: #000;
-  margin: 0px 25px;
+  margin: 20px auto;
   cursor: pointer;
 }
 
@@ -207,7 +203,7 @@ main {
 .image-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
   cursor: pointer;
 }
 
