@@ -70,7 +70,7 @@ function startGame() {
             setTimeout(() => {
                 document.body.innerHTML = `
                     <div class="barrier">
-                    <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">のチャレンジ！</h1>
+                    <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の<br>チャレンジ！</h1>
                     <p>スマホを振って！</p>
                     <span id="shakeCount">0</span>
                     </div>
@@ -87,7 +87,7 @@ function startGame() {
                     document.body.innerHTML = `
                         <div class="barrier">
                         <p id="signal">終了</p>
-                        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の結果 ${shakeCount} 回</h1>
+                        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の結果<br> ${shakeCount} 回</h1>
                     `;
 
                     // 次のプレイヤー or 結果表示
