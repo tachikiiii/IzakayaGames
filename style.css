@@ -103,12 +103,11 @@ main {
 .selected-icons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* はみ出さないように調整 */
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   width: 100%; /* barrier の幅内に収める */
   max-width: 100%;
-  padding: 10px;
 }
 
 /* 1人・2人の時はそのままのサイズ */
@@ -137,7 +136,7 @@ main {
   margin: 2px;
   padding: 2px;
   width: 100%;
-  max-width: 120px; /* 大きくなりすぎないように制限 */
+  max-width: 90px; /* 大きくなりすぎないように制限 */
   box-sizing: border-box;
   text-align: center;
 }
