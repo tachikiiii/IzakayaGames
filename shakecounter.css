@@ -95,11 +95,6 @@ button:hover {
   height: 120px;
 }
 
-/* シェイク回数のスタイル */
-.result-text {
-  font-size: 32px;
-}
-
 /* 終了時の「終了」表示 */
 #signal {
   font-size: 120px;
@@ -122,6 +117,7 @@ button:hover {
   margin-bottom: 10px;
 }
 
+/* シェイク回数のスタイル */
 .result-text {
   font-size: 36px;
   font-weight: bold;
