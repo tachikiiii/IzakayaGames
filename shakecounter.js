@@ -110,7 +110,7 @@ function startGame() {
                             <div class="next-player">
                                 <p>次は、、</p>
                                 <img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}" class="next-icon">
-                                <button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button>
+                                <button id="nextPlayer">次のプレイヤーへ</button>
                             </div>
                         </div>`; // ← ここで `barrier` を閉じる
 
@@ -119,7 +119,7 @@ function startGame() {
                     
                     // 結果表示
                     } else {
-                        html += `<button class="buttonDesign" id="resultPage">結果を見る</button></div>`; // ← `barrier` 内に配置
+                        html += `<button id="resultPage">結果を見る</button></div>`; // ← `barrier` 内に配置
                         document.body.innerHTML = html;
                         document.getElementById("resultPage").addEventListener("click", showResults);
                     }
@@ -154,7 +154,7 @@ function showResults() {
 
     // 「お会計へ」ボタンの表示
     resultHTML += `
-        <button class="buttonDesign" id="checkoutPage">お会計へ</button>
+        <button id="checkoutPage">お会計へ</button>
     `;
 
     //【金額入力画面】に移動
@@ -205,7 +205,7 @@ function showGame() {
             <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の<br>チャレンジ！</h1>
             <p>スマホを10秒間<br>振り続けてね</p>
         </div>
-        <button class="buttonDesign" id="startButton">スタート</button>
+        <button id="startButton">スタート</button>
     `;
     // 中間画面の「スタート」ボタンをクリックしたら、モーションセンサーの許可をリクエスト（結果としてゲーム開始）
     document.getElementById("startButton").addEventListener("click", requestMotionPermission);

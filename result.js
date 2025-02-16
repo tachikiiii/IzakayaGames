@@ -183,7 +183,7 @@ function showPopup(){
 
     // 「最初の画面に戻る」ボタン
     const buttonHTML = `
-        <button class="buttonDesign" style="margin-top: 10px;" onclick="window.location.href = 'mode-select.html';">
+        <button style="margin-top: 10px;" onclick="window.location.href = 'mode-select.html';">
             最初からやり直す
         </button>
     `;

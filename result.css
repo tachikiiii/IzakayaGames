@@ -16,6 +16,26 @@ p{
     transform: translate(-50%,-50%);
 }
 
+/* 共通のボタンデザイン */
+button{
+    display: block;
+    text-decoration: none;
+    width: auto;
+    border-radius: 100vh;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    font-weight: bold;
+    border: 2px solid #BF7F64;
+    color: #000;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #fff;
+    background: #BF7F64;
+}
+
 /* ポップアップ背景 */
 .popup-background {
     position: fixed;
@@ -71,26 +91,6 @@ p{
     background-color: red;
     color: white;
 }*/
-
-/* ボタンデザイン */
-.buttonDesign{
-    display: block;
-    text-decoration: none;
-    width: auto;
-    border-radius: 100vh;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    font-weight: bold;
-    border: 2px solid #BF7F64;
-    color: #000;
-    margin: 20px auto;
-    cursor: pointer;
-}
-
-.buttonDesign:hover {
-    color: #fff;
-    background: #BF7F64;
-}
 
 /* 結果の表示 */
 .result {

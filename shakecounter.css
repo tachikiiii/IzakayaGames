@@ -35,8 +35,8 @@ p {
   text-align: center;
 }
 
-/* ボタンデザイン */
-.buttonDesign {
+/* 共通のボタンデザイン */
+button {
   display: block;
   text-decoration: none;
   width: auto;
@@ -50,7 +50,7 @@ p {
   cursor: pointer;
 }
 
-.buttonDesign:hover {
+button:hover {
   color: #fff;
   background: #BF7F64;
 }
