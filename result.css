@@ -57,15 +57,9 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
-    height: auto;
-    width: auto;
-    max-width: 90%;
-    max-height: 90%;
-    overflow: auto;
     background-color: #E1D1B7;
     border: 5px solid #5B4746;
     width: calc(100vw - 120px);
-    box-shadow: 0px 0px 3px 1px gray;
     display: none;
     padding: 20px;
 }
@@ -94,15 +88,32 @@ button:hover {
 
 /* 結果の表示 */
 .result {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
 }
 
-/* 敗者の表示 */
-.eachLoser{
+.result li{
     display: flex;
-    flex-direction: row;
+    align-items: center;    
+    justify-content: center;  
+    gap: 10px;              
+    margin: 10px 0;
+}
+
+.result img{
+    width: 120px;
+    height: 120px;
+}
+
+.result-rank{
+    font-size: 25px;
+}
+
+.result-text {
+    font-size: 25px;
+    font-weight: bold;
+    color: #BF7F64;
 }
 
 .loser {

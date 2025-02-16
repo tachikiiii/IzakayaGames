@@ -139,23 +139,17 @@ function showPopup(){
             : `${loserShare}円`;
 
         losersHTML += `
-            <li class="eachLoser">
-                <span style="font-size: 20px;">最下${count}位</span>
+            <li>
+                <span class="result-rank">最下${count}位</span>
                 <img src="./img/btn_${index.icon}.png" alt="${index.icon}">
-                <span style="font-size: 20px;">${loserShareText}</span>
+                <span class="result-text">${loserShareText}</span>
             </li>
         `;
 
         count += 1;
     });
 
-    const losersDiv = `
-        <div class="loser">
-            ${losersHTML}
-        </div>
-    `;
-
-    resultDiv.innerHTML += losersDiv;
+    resultDiv.innerHTML += losersHTML;
 
     // 全員が負けではないことを確認する
     if (finalWinners.length !== 0) {
@@ -183,7 +177,7 @@ function showPopup(){
 
     // 「最初の画面に戻る」ボタン
     const buttonHTML = `
-        <button style="margin-top: 10px;" onclick="window.location.href = 'mode-select.html';">
+        <button onclick="window.location.href = 'mode-select.html';">
             最初からやり直す
         </button>
     `;

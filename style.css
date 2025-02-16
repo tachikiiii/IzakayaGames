@@ -96,6 +96,14 @@ button:hover {
   border-width: 3px;
 }
 
+/* 「戻る」ボタンと「次へ」ボタンの配置 */
+.playerSelect-button{
+  display: flex;
+  align-items: center;
+  margin: 50px 10px 50px 10px;
+  justify-content: space-evenly;
+}
+
 /* 「戻る」ボタン */
 .back {
   opacity: 0.5;

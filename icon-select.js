@@ -54,7 +54,7 @@ function selectIcon(iconId) {
   }
 
   // 既に最大人数に達している場合は何もしない
-  if (players.length >= maxPlayers) {
+  if (players.length > maxPlayers) {
     return;
   }
   
@@ -70,9 +70,6 @@ function selectIcon(iconId) {
 
     document.querySelectorAll(".icon-frame").forEach(frame => frame.classList.remove("active"));
     
-    // ヘッダーを完了メッセージに変更
-    //const header = document.querySelector("header h1");
-    //header.textContent = "すべてのプレイヤーの登録が完了しました";
     // 「次へ」ボタンを表示し、クリック時にゲーム開始へ遷移
     const nextButton = document.querySelector("#next");
     nextButton.style.display = "inline-block";
