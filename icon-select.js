@@ -1,3 +1,4 @@
+
 // グローバル変数：選択済みプレイヤー情報と現在のプレイヤー番号
 let players = [];
 let currentPlayer = 1;
@@ -21,10 +22,12 @@ function initIconFrames() {
   for (let i = 1; i <= maxPlayers; i++) {
     const frame = document.createElement("div");
     frame.className = "icon-frame";
+
     // 最初のプレイヤー枠にactiveクラスを追加
     if (i === 1) {
       frame.classList.add("active");
     }
+
     // 各枠にプレイヤー番号を示す属性を設定
     frame.setAttribute("data-player", i);
     frame.innerHTML = `
@@ -43,11 +46,13 @@ function initIconFrames() {
  * @param {string} iconId - 選択されたアイコンのID
  */
 function selectIcon(iconId) {
+
   // 同じアイコンが既に選ばれていれば警告
   if (players.some(player => player.icon === iconId)) {
     alert("このアイコンはすでに選択されています。別のアイコンを選んでください。");
     return;
   }
+
   // 既に最大人数に達している場合は何もしない
   if (players.length >= maxPlayers) {
     return;
@@ -73,6 +78,7 @@ function selectIcon(iconId) {
     nextButton.style.display = "inline-block";
     nextButton.addEventListener("click", startGame);
   } else {
+
     // 次のプレイヤーへ進む：番号更新とヘッダーの更新
     currentPlayer++;
     updateActiveFrame();
@@ -86,9 +92,9 @@ function selectIcon(iconId) {
  */
 function updateIconFrame(playerNumber, iconId) {
   const container = document.getElementById("selected-icons");
-  // data-player属性がplayerNumberに一致する枠を取得
-  const frame = container.querySelector(`.icon-frame[data-player='${playerNumber}']`);
+  const frame = container.querySelector(`.icon-frame[data-player='${playerNumber}']`);  // data-player属性がplayerNumberに一致する枠を取得
   if (frame) {
+
     // ラベルはそのまま、画像を選択されたアイコンに差し替え
     frame.innerHTML = `
       <p>${playerNumber}人目</p>
@@ -120,7 +126,7 @@ function savePlayersToSessionStorage() {
       players.map((player, index) => ({
         number: `${index + 1}人目`,
         icon: player.icon,
-        shakeCount: 0 // 初期シェイク回数は0
+        shakeCount: 0      // 初期シェイク回数は0
       }))
     )
   );

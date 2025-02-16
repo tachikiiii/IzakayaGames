@@ -1,3 +1,5 @@
+
+//【；モード選択画面】に遷移
 function redirectToNextPage() {
     window.location.href = "mode-select.html"; 
 }

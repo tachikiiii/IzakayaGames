@@ -9,15 +9,16 @@
 </head>
 
 <body>
-  <!-- アイコン選択グリッド（barrierの外に配置） -->
-
 
   <!-- ヘッダー：現在のプレイヤー番号や登録完了メッセージを表示 -->
   <div class="barrier">
     <img src="img/lettering-iconselect.png">
+
     <!-- ここに選択されたアイコンの枠が表示される -->
     <div class="selected-icons" id="selected-icons">
+      
       <!-- ページ読み込み時にJSで枠が生成される -->
+
     </div>
   </div>
 
@@ -25,6 +26,7 @@
     <!-- 「次へ」ボタン（全員選択後に表示される） -->
     <button class="buttonDesign" id="next">次へ</button>
 
+    <!-- アイコン選択グリッド（barrierの外に配置） -->
     <div class="icon-grid">
       <button class="icon" id="mouse" onclick="selectIcon('mouse')">
         <img src="./img/btn_mouse.png">
@@ -63,8 +65,6 @@
         <img src="./img/btn_boar.png">
       </button>
     </div>
-
-
   </main>
 
   <script src="icon-select.js"></script>

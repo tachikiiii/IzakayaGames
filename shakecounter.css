@@ -8,24 +8,6 @@ body {
   align-items: center; 
 }
 
-.barrier {
-  border: 5px solid #5B4746;
-  margin: 20px 0px 20px 0px;
-  padding: 40px;
-  width: calc(100vw - 120px);
-  background-color: #E1D1B7;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.container {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-}
-
 h1 {
   margin-bottom: 20px;
   color: #006064;
@@ -39,6 +21,18 @@ h2 {
 p {
   font-size: 24px;
   color: #004d40;
+}
+
+/* 囲いの表示 */
+.barrier {
+  border: 5px solid #5B4746;
+  margin: 20px 0px 20px 0px;
+  padding: 40px;
+  width: calc(100vw - 120px);
+  background-color: #E1D1B7;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 /* ボタンデザイン */
@@ -59,6 +53,13 @@ p {
 .buttonDesign:hover {
   color: #fff;
   background: #BF7F64;
+}
+
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
 }
 
 /* シェイクカウント表示 */

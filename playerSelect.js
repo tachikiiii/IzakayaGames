@@ -1,3 +1,4 @@
+
 //【人の識別画面】に移動
 document.getElementById('submitBtn').addEventListener('click', function () {
     const selectedValue = document.getElementById('numberSelect').value;

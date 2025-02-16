@@ -9,6 +9,14 @@ body{
     align-items: center; 
 }
 
+p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/* ポップアップ背景 */
 .popup-background {
     position: fixed;
     z-index: 100;
@@ -22,6 +30,7 @@ body{
     background-repeat: repeat;
 }
 
+/* ポップアップ */
 .popup {
     z-index: 101;
     position: fixed;
@@ -41,6 +50,7 @@ body{
     padding: 20px;
 }
 
+/* 今後の機能追加時に使用するため、一時的にコメントアウト
 .popup > .close-button {
     --size: 20px;
     position: absolute;
@@ -60,19 +70,9 @@ body{
 .popup > .close-button:hover {
     background-color: red;
     color: white;
-}
+}*/
 
-.button-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.button-container > * {
-    margin: 15px;
-}
-
+/* ボタンデザイン */
 .buttonDesign{
     display: block;
     text-decoration: none;
@@ -92,19 +92,14 @@ body{
     background: #BF7F64;
 }
 
-p{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
-
+/* 結果の表示 */
 .result {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* 敗者の表示 */
 .eachLoser{
     display: flex;
     flex-direction: row;

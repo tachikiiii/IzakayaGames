@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結果表示</title>
+    <title>結果発表</title>
     <link rel="stylesheet" href="result.css">
 
 </head>
 <body>
+
+    <!-- ロード時のメッセージを表示 -->
     <p id="loadingMessage"></p>
 
-    <!-- ポップアップの内容 -->
+    <!-- ポップアップの内容を表示 -->
     <div class="popup-background" id="popupBackground"></div>
     <div class="popup" id="popup">
-        <!-- 一旦コメントアウト
+
+        <!-- 今後の機能追加時に使用するため、一時的にコメントアウト
         <label class="close-button" id="closeButton" for="popupFlag1">×</label>
         -->
+
+        <!-- 「結果発表」の表示と「最初からやり直す」ボタンを表示 -->
         <img src="img/lettering-result.png">
         <ul class="result" id="result"></ul>
     </div>

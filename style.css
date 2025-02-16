@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+header {
+  text-align: center;
+  padding-top: 8px;
+}
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -10,6 +15,17 @@ body {
   align-items: center; 
 }
 
+main {
+  padding: 16px 0;
+  text-align: center;
+}
+
+h1 {
+  margin: 16px 0;
+  font-size: 24px;
+}
+
+/* 囲いの表示 */
 .barrier {
   border: 5px solid #5B4746;
   padding: 40px;
@@ -25,81 +41,78 @@ body {
   overflow: hidden; /* はみ出し防止 */
 }
 
-header {
-  text-align: center;
-  padding-top: 8px;
-}
-
-h1 {
-  margin: 16px 0;
-  font-size: 24px;
-}
-
-main {
-  padding: 16px 0;
-  text-align: center;
-}
-
-/* アイコンボタンスタイル（アイコン選択グリッド用） */
-.icon {
-  width: 110px;
-  height: 110px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  overflow: hidden;
+/* 共通のボタンデザイン */
+.buttonDesign {
+  display: block;
+  text-decoration: none;
+  width: auto;
+  border-radius: 100px;
+  font-size: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: 2px solid #BF7F64;
+  color: #000;
+  margin: 20px auto;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.buttonDesign:hover {
+  color: #fff;
+  background: #BF7F64;
 }
 
-.icon:hover {
-  border-color: #007bff;
+/* 【起動画面】 */
+/* メインのイラスト */
+.icon-index {
+  font-weight: bold;
+  border: 20px solid #5B4746;
+  margin: 0px 25px;
+  cursor: pointer;
 }
 
-.icon.disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+/* タイトルの表示 */
+.icon-title {
+  margin: 20px 0px;
 }
 
-.icon.selected {
-  border: 3px solid orange;
-}
-
-/* アイコン選択グリッドのレイアウト */
-.icon-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 10px;
+/* 【モード選択画面】 */
+/* モード選択のボタン */
+.image-container {
+  padding: 20px;
+  margin: 20px;
+  width: calc(100vw - 120px);
+  background-color: #BF7F64;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 360px;
 }
 
-/* 画面サイズによる調整 */
-@media (min-width: 480px) {
-  .icon-grid {
-    grid-template-columns: repeat(3, 110px);
-  }
+/* 【人数選択画面】 */
+/* プルダウン選択 */
+.pulldown {
+  font-size: 30px;
+  padding: 10px 20px;
+  border-width: 3px;
 }
 
-@media (min-width: 768px) {
-  .icon-grid {
-    grid-template-columns: repeat(4, 120px);
-  }
+/* 「戻る」ボタン */
+.back {
+  opacity: 0.5;
+  display: block;
+  text-decoration: none;
+  width: auto;
+  border-radius: 100px;
+  font-size: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: 2px solid #7F7F7F;
+  color: #000;
+  margin: 0px 25px;
 }
 
-@media (min-width: 1024px) {
-  .icon-grid {
-    grid-template-columns: repeat(4, 140px);
-  }
-}
-
-/* selected-icons のレイアウト（barrier 内に収める） */
+/* 【人の識別画面】 */
+/* 選択される十二支のレイアウト（barrier 内に収める） */
 .selected-icons {
   display: grid;
   gap: 2px;
@@ -133,6 +146,65 @@ main {
   grid-template-columns: repeat(4, 70px);
 }
 
+/* アイコン選択グリッドのレイアウト */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  max-width: 360px;
+}
+
+/* 画面サイズによる調整 */
+@media (min-width: 480px) {
+  .icon-grid {
+    grid-template-columns: repeat(3, 110px);
+  }
+}
+
+@media (min-width: 768px) {
+  .icon-grid {
+    grid-template-columns: repeat(4, 120px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .icon-grid {
+    grid-template-columns: repeat(4, 140px);
+  }
+}
+
+/* アイコンボタンスタイル（アイコン選択グリッド用） */
+.icon {
+  width: 110px;
+  height: 110px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.icon:hover {
+  border-color: #007bff;
+}
+
+.icon.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.icon.selected {
+  border: 3px solid orange;
+}
+
 /* 各アイコン枠（サイズ調整） */
 .icon-frame {
   margin: 0;
@@ -156,59 +228,14 @@ main {
   border-radius: 50%;
 }
 
-/* ボタンデザイン */
-.buttonDesign {
-  display: block;
-  text-decoration: none;
-  width: auto;
-  border-radius: 100px;
-  font-size: 20px;
-  padding: 10px 20px;
-  font-weight: bold;
-  border: 2px solid #BF7F64;
-  color: #000;
-  margin: 20px auto;
-  cursor: pointer;
-}
-
+/* 「次へ」ボタン */
 #next {
   display: block;
   margin: 20px auto;
 }
 
-.buttonDesign:hover {
-  color: #fff;
-  background: #BF7F64;
-}
-
-.playerSelect-back {
-  opacity: 0.5;
-  display: block;
-  text-decoration: none;
-  width: auto;
-  border-radius: 100px;
-  font-size: 20px;
-  padding: 10px 20px;
-  font-weight: bold;
-  border: 2px solid #7F7F7F;
-  color: #000;
-  margin: 0px 25px;
-}
-
-.pulldown {
-  font-size: 30px;
-  padding: 10px 20px;
-  border-width: 3px;
-}
-
-.image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  cursor: pointer;
-}
-
-/* .inputAmount とその内部要素 */
+/* 【金額入力画面】 */
+/* お会計を入力する欄 */
 .inputAmount {
   font-size: 30px;
   padding: 10px 20px;
@@ -218,24 +245,4 @@ main {
 
 .inputAmount input {
   font-size: 20px;
-}
-
-.image-container {
-  padding: 20px;
-  margin: 20px;
-  width: calc(100vw - 120px);
-  background-color: #BF7F64;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.icon-index {
-  font-weight: bold;
-  border: 20px solid #5B4746;
-  margin: 0px 25px;
-}
-
-.icon-title {
-  margin: 20px 0px;
 }

@@ -1,6 +1,8 @@
+
 // DOMの読み込みが完了したら以下の処理を実行
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("calculateBtn").addEventListener("click", function(event) {
+        
         // フォームのデフォルト送信動作をキャンセル
         event.preventDefault(); 
 

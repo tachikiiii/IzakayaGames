@@ -6,15 +6,14 @@ const numPeople=sessionStorage.getItem("playerCount");
 const players = JSON.parse(sessionStorage.getItem('players'));
 const mode = sessionStorage.getItem("mode")
 
+// 変数の指定
 let finalOutcome = 0
 let finalWinners = 0
 let finalLosers = 0
 
-// お会計の計算に使う変数
 let winnerShare = 0
 let loserShare = 0
 let remainder = 0
-
 
 // playersの配列の例
 //const players = [

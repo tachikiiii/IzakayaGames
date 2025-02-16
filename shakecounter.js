@@ -1,7 +1,9 @@
+
+// 変数や定数の指定
 let shakeCount = 0;
 let lastX = null, lastY = null, lastZ = null;
-const threshold = 10; // 値が大きいほどシェイクの感度が鈍る
-const debounceTime = 200; // 連続カウントを防ぐ時間（ミリ秒）
+const threshold = 10;        // 値が大きいほどシェイクの感度が鈍る
+const debounceTime = 200;    // 連続カウントを防ぐ時間（ミリ秒）
 let lastShakeTime = 0;
 let gameTimer = null;
 let countdownSound = new Audio("countdown.mp3");
@@ -33,6 +35,7 @@ function handleMotion(event) {
             const currentTime = Date.now();
             if (currentTime - lastShakeTime > debounceTime) {
                 shakeCount++;
+
                 // ゲーム中のHTML内にある要素の更新
                 const shakeCountEl = document.getElementById("shakeCount");
                 if (shakeCountEl) {
@@ -57,6 +60,8 @@ function startGame() {
     const countdownInterval = setInterval(() => {
         countdown--;
         countdownSound.play();
+
+        // カウントダウン中の表示
         if (countdown > 0) {
             document.body.innerHTML = `
                 <div class="barrier">
@@ -65,6 +70,8 @@ function startGame() {
                 <h2>${countdown}</h2>
                 </div>
             `;
+
+        // カウントダウン後の表示
         } else {
             clearInterval(countdownInterval);
             setTimeout(() => {
@@ -87,28 +94,30 @@ function startGame() {
 
                     // 結果表示（barrier の中に次のプレイヤー表示も含める）
                     let html = `
-        <div class="barrier">
-            <p id="signal">終了</p>
-            <div class="result-container">
-                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" class="result-icon">
-                <p class="result-text">${player.shakeCount} 回</p>
-            </div>
-    `;
+                        <div class="barrier">
+                            <p id="signal">終了</p>
+                            <div class="result-container">
+                                <img src="./img/btn_${player.icon}.png" alt="${player.icon}" class="result-icon">
+                                <p class="result-text">${player.shakeCount} 回</p>
+                            </div>
+                        `;
 
-                    // 次のプレイヤー or 結果表示
+                    // 次のプレイヤー
                     if (currentPlayerIndex + 1 < players.length) {
                         currentPlayerIndex++;
                         const nextPlayer = getCurrentPlayer();
                         html += `
-            <div class="next-player">
-                <p>次は、、</p>
-                <img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}" class="next-icon">
-                <button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button>
-            </div>
-        </div>`; // ← ここで `barrier` を閉じる
+                            <div class="next-player">
+                                <p>次は、、</p>
+                                <img src="./img/btn_${nextPlayer.icon}.png" alt="${nextPlayer.icon}" class="next-icon">
+                                <button class="buttonDesign" id="nextPlayer">次のプレイヤーへ</button>
+                            </div>
+                        </div>`; // ← ここで `barrier` を閉じる
 
                         document.body.innerHTML = html;
                         document.getElementById("nextPlayer").addEventListener("click", requestMotionPermission);
+                    
+                    // 結果表示
                     } else {
                         html += `<button class="buttonDesign" id="resultPage">結果を見る</button></div>`; // ← `barrier` 内に配置
                         document.body.innerHTML = html;
@@ -123,6 +132,7 @@ function startGame() {
 
 // ゲーム結果を表示する（シェイク回数順に並べる）
 function showResults() {
+
     // シェイク回数の多い順に並べ替え
     players.sort((a, b) => b.shakeCount - a.shakeCount);
 
@@ -142,10 +152,12 @@ function showResults() {
         `;
     });
 
+    // 「お会計へ」ボタンの表示
     resultHTML += `
-            <button class="buttonDesign" id="checkoutPage">お会計へ</button>
-        `;
+        <button class="buttonDesign" id="checkoutPage">お会計へ</button>
+    `;
 
+    //【金額入力画面】に移動
     document.body.innerHTML = resultHTML;
     document.getElementById("checkoutPage").addEventListener("click", () => {
         window.location.href = "checkout.html";
@@ -187,11 +199,11 @@ document.getElementById("startGame").addEventListener("click", showGame);
 
 // ★ 「ゲーム開始」ボタンを押した後に表示する中間画面の作成
 function showGame() {
-    const player = getCurrentPlayer(); // 現在のプレイヤー情報を取得
+    const player = getCurrentPlayer();     // 現在のプレイヤー情報を取得
     document.body.innerHTML = `
         <div class="barrier">
-        <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の<br>チャレンジ！</h1>
-        <p>スマホを10秒間<br>振り続けてね</p>
+            <h1><img src="./img/btn_${player.icon}.png" alt="${player.icon}">の<br>チャレンジ！</h1>
+            <p>スマホを10秒間<br>振り続けてね</p>
         </div>
         <button class="buttonDesign" id="startButton">スタート</button>
     `;
