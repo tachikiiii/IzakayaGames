@@ -129,82 +129,66 @@ function showPopup(){
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = ''; 
 
-    const losersDiv = document.createElement('div');
-    losersDiv.classList.add("loser");
+    let count = 1;
 
-    let count=1
     // 負けたプレイヤーのアイコンと金額をまとめて表示
+    let losersHTML = '';
     finalLosers.forEach(index => {
-        const losersDivEach = document.createElement('li');
-        losersDivEach.classList.add('eachLoser');
+        let loserShareText = (count === 1) 
+            ? `${loserShare + remainder}円`
+            : `${loserShare}円`;
 
-        const numElement = document.createElement('span');
-        const loserImageElement = document.createElement('img');
-        const loserShareElement = document.createElement('span');
+        losersHTML += `
+            <li class="eachLoser">
+                <span style="font-size: 20px;">最下${count}位</span>
+                <img src="./img/btn_${index.icon}.png" alt="${index.icon}">
+                <span style="font-size: 20px;">${loserShareText}</span>
+            </li>
+        `;
 
-        // 負けた人の順位表示
-        numElement.textContent = `最下${count}位`;
-        numElement.style = "fon-size: 20px"
+        count += 1;
+    });
 
-        // 負けた人のアイコン表示
-        loserImageElement.src = `./img/btn_${index.icon}.png`;
+    const losersDiv = `
+        <div class="loser">
+            ${losersHTML}
+        </div>
+    `;
 
-        // 負けた人の支払い額を表示
-        if (count == 1){
-            const mostLoserShare = loserShare + remainder
-            loserShareElement.textContent = `${mostLoserShare}円`;
-
-            console.log(count-1, "place ", loserShare)
-        } else{
-            loserShareElement.textContent = `${loserShare}円`;
-        }
-
-        loserShareElement.style = "fon-size: 20px"        
-
-        count += 1
-
-        losersDivEach.appendChild(numElement);
-        losersDivEach.appendChild(loserImageElement);
-        losersDivEach.appendChild(loserShareElement);
-
-        losersDiv.append(losersDivEach)
-    })
-
-    resultDiv.appendChild(losersDiv);
+    resultDiv.innerHTML += losersDiv;
 
     // 全員が負けではないことを確認する
-    if (finalWinners.length != 0){
-        const winnerDiv = document.createElement('div');
+    if (finalWinners.length !== 0) {
+        let winnersHTML = '';
 
         // 勝ったプレイヤーのアイコンをまとめて表示
         finalWinners.forEach(index => {
-            const winnerImageElement = document.createElement('img');
-            winnerImageElement.src = `./img/btn_${index.icon}.png`;
-            winnerImageElement.style = 'width:50px; height:50px;';
-            winnerDiv.appendChild(winnerImageElement);
-        })
+            winnersHTML += `
+                <img src="./img/btn_${index.icon}.png" alt="${index.icon}" style="width:50px; height:50px;">
+            `;
+        });
 
         // 勝ったプレイヤーの支払い額を表示
-        const winnerShareDiv = document.createElement('div');
-        const winnerShareElement = document.createElement('span');
-        winnerShareElement.textContent = `${winnerShare}円`;
-        winnerShareDiv.appendChild(winnerShareElement);
+        const winnerShareHTML = `
+            <div>
+                <span>${winnerShare}円</span>
+            </div>
+    `   ;
 
-        resultDiv.appendChild(winnerDiv);
-        resultDiv.appendChild(winnerShareDiv);
+        resultDiv.innerHTML += `
+            <div>${winnersHTML}</div>
+            ${winnerShareHTML}
+        `;
     }
 
-
     // 「最初の画面に戻る」ボタン
-    const button = document.createElement('button');
-    button.textContent = '最初からやり直す'; 
-    button.classList.add('buttonDesign'); 
-    button.style.marginTop = '10px'; 
-    button.onclick = function() {
-        window.location.href = 'mode-select.html'; 
-    };
+    const buttonHTML = `
+        <button class="buttonDesign" style="margin-top: 10px;" onclick="window.location.href = 'mode-select.html';">
+            最初からやり直す
+        </button>
+    `;
 
-    resultDiv.appendChild(button);
+    resultDiv.innerHTML += buttonHTML;
 }
 
 // ポップアップを表示する
@@ -230,11 +214,6 @@ if (amount) {
             calculateFinalOutcomeShakeCount();
             calculatePayment(parseInt(amount));
             showPopup();
-
-            //test
-            console.log("finalWinner:", finalWinners, "finalLoser:", finalLosers)
-            console.log("winnerShare:", winnerShare, "loserShare:", loserShare)
-
         }, 3000); 
     }else{
         document.getElementById('loadingMessage').textContent = 'No mode selected.';
@@ -245,7 +224,7 @@ if (amount) {
 }
 
 // 「x」ボタンを選択されるとポップアップ画面が消える
-// 一旦コメントアウト
+// 今後の機能追加時に使用するため、一時的にコメントアウト
 /*
 document.getElementById('closeButton').addEventListener('click', function() {
     document.getElementById('popupBackground').style.display = 'none';
