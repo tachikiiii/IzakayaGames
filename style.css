@@ -235,8 +235,7 @@ button:hover {
 
 /* 「次へ」ボタン */
 #next {
-  display: block;
-  margin: 20px auto;
+  display: none;
 }
 
 /* 【金額入力画面】 */

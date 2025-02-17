@@ -54,7 +54,7 @@ function selectIcon(iconId) {
   }
 
   // 既に最大人数に達している場合は何もしない
-  if (players.length > maxPlayers) {
+  if (players.length >= maxPlayers) {
     return;
   }
   
